@@ -1,5 +1,5 @@
 {
-  "name": "afraid-aurora",
+  "name": "heal-website",
   "type": "module",
   "version": "0.0.1",
   "engines": {
@@ -9,12 +9,19 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "typecheck": "astro check",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "check": "npm run typecheck && npm run lint && npm run format:check"
   },
   "dependencies": {
     "astro": "^7.4.5"
   },
   "devDependencies": {
+    "@astrojs/check": "^0.9.12",
     "@eslint/js": "^10.0.1",
     "eslint": "^10.14.0",
     "eslint-config-prettier": "^10.1.8",
@@ -22,6 +29,8 @@
     "globals": "^17.14.0",
     "prettier": "^3.9.10",
     "prettier-plugin-astro": "^1.1.2",
+    "typescript": "^6.0.3",
     "typescript-eslint": "^8.72.1"
-  }
+  },
+  "private": true
 }
