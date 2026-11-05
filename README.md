@@ -1,43 +1,36 @@
-# Astro Starter Kit: Minimal
+# HEAL Website
+
+Official website of the **HEAL** project — COM-B & Exposome Partnership for Health Engagement (RIF POST-DOC/0925/ROandOther/0027).
+
+Built with [Astro](https://astro.build) + TypeScript as a static site.
+
+## Getting started
+
+Requires Node.js 22+.
 
 ```sh
-npm create astro@latest -- --template minimal
+npm install      # installs dependencies and git hooks
+npm run dev      # dev server at http://localhost:4321
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Scripts
 
-## 🚀 Project Structure
+| Command            | Action                                 |
+| :----------------- | :------------------------------------- |
+| `npm run dev`      | Start the local dev server             |
+| `npm run build`    | Build the production site to `./dist/` |
+| `npm run preview`  | Preview the production build           |
+| `npm run check`    | Typecheck, lint and format check       |
+| `npm run lint:fix` | Fix lint issues                        |
+| `npm run format`   | Format all files with Prettier         |
 
-Inside of your Astro project, you'll see the following folders and files:
+## Workflow
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+- `main` — released code; `develop` — integration branch.
+- Create a feature branch from `develop`, open a pull request back into `develop`.
+- Commits follow [Conventional Commits](COMMIT_CONVENTION.md) and are checked automatically.
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Documentation
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+- [REQUIREMENTS.md](REQUIREMENTS.md) — user stories (MoSCoW) and non-functional requirements
+- [COMMIT_CONVENTION.md](COMMIT_CONVENTION.md) — commit message rules
