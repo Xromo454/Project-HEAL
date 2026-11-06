@@ -28,9 +28,10 @@ npm run dev      # dev server at http://localhost:4321
 
 - `main` — released code; `develop` — integration branch.
 - Create a feature branch from `develop`, open a pull request back into `develop`.
-- Commits follow [Conventional Commits](COMMIT_CONVENTION.md) and are checked automatically.
+- Commits follow [Conventional Commits](docs/COMMIT_CONVENTION.md) and are checked automatically.
 
 ## Documentation
 
-- [REQUIREMENTS.md](REQUIREMENTS.md) — user stories (MoSCoW) and non-functional requirements
-- [COMMIT_CONVENTION.md](COMMIT_CONVENTION.md) — commit message rules
+- [REQUIREMENTS.md](docs/REQUIREMENTS.md) — user stories (MoSCoW) and non-functional requirements
+- [COMMIT_CONVENTION.md](docs/COMMIT_CONVENTION.md) — commit message rules
+- [ARCHITECTURE.md](docs/ARCHITECTURE.md) — architecture diagram and key decisions
