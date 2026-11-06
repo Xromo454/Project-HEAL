@@ -1,0 +1,19 @@
+[
+  { "id": "M1.1", "title": "Project kick-off", "workPackage": "WP1", "month": 1, "meansOfVerification": "Project Kick-off meeting held." },
+  { "id": "M1.2", "title": "Ethics approval", "workPackage": "WP1", "month": 3, "meansOfVerification": "Ethics approval obtained." },
+  { "id": "M2.1", "title": "First manuscript submitted", "workPackage": "WP2", "month": 15, "meansOfVerification": "First manuscript submitted to a peer-reviewed journal." },
+  { "id": "M2.2", "title": "Implementation toolkit", "workPackage": "WP2", "month": 18, "meansOfVerification": "Implementation toolkit finalized and disseminated." },
+  { "id": "M2.3", "title": "Policy brief", "workPackage": "WP2", "month": 16, "meansOfVerification": "Policy brief delivered." },
+  { "id": "M3.1", "title": "Platform alpha", "workPackage": "WP3", "month": 5, "meansOfVerification": "Alpha version of the platform ready for internal testing." },
+  { "id": "M3.2", "title": "Platform beta accepted", "workPackage": "WP3", "month": 6, "meansOfVerification": "Go/no-go gate for recruitment: partner acceptance test passed; platform fully operational and integrated with partner APIs." },
+  { "id": "M3.3", "title": "WhatsApp/SMS fallback operational", "workPackage": "WP3", "month": 6, "meansOfVerification": "SMS verification tested and ready as contingency." },
+  { "id": "M4.1", "title": "API technical specification", "workPackage": "WP4", "month": 2, "meansOfVerification": "API Technical Specification completed and approved by partners." },
+  { "id": "M4.2", "title": "MOUs signed", "workPackage": "WP4", "month": 3, "meansOfVerification": "MOUs signed with all core partners." },
+  { "id": "M4.3", "title": "Pilot sandbox deployed", "workPackage": "WP4", "month": 4, "meansOfVerification": "Pilot Sandbox deployed and security compliance validated." },
+  { "id": "M4.4", "title": "Participants recruited", "workPackage": "WP4", "month": 9, "meansOfVerification": "Target of 20 participants recruited and consented." },
+  { "id": "M4.5", "title": "Intervention completed", "workPackage": "WP4", "month": 15, "meansOfVerification": "Core 6-month active intervention phase completed for all participants." },
+  { "id": "M4.6", "title": "Midpoint go/no-go review", "workPackage": "WP4", "month": 16, "meansOfVerification": "Midpoint Go/No-Go Review for dissemination." },
+  { "id": "M5.1", "title": "Dataset integration finalized", "workPackage": "WP5", "month": 19, "meansOfVerification": "Dataset Integration Finalized." },
+  { "id": "M5.2", "title": "Primary and mediation analysis", "workPackage": "WP5", "month": 22, "meansOfVerification": "Primary and Mediation Analysis Completed." },
+  { "id": "M5.3", "title": "Mechanistic modelling", "workPackage": "WP5", "month": 23, "meansOfVerification": "Mechanistic Modelling Completed." }
+]
