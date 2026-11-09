@@ -1,0 +1,12 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { SITE } from '@/config/site';
+---
+
+<BaseLayout title="Contact">
+  <h1>Contact</h1>
+  <p>
+    Email: <a href={`mailto:${SITE.contactEmail}`}>{SITE.contactEmail}</a>
+  </p>
+  <p>Cyprus University of Technology, Limassol, Cyprus</p>
+</BaseLayout>

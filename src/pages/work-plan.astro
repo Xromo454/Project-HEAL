@@ -1,0 +1,51 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+
+const workPackages = (await getCollection('workPackages')).sort((a, b) =>
+  a.data.id.localeCompare(b.data.id),
+);
+const milestones = await getCollection('milestones');
+const partners = await getCollection('partners');
+---
+
+<BaseLayout title="Work plan">
+  <h1>Work plan</h1>
+
+  {workPackages.map((wp) => {
+    const lead = partners.find((p) => p.id === wp.data.lead.id);
+    const wpMilestones = milestones
+      .filter((m) => m.data.workPackage.id === wp.data.id)
+      .sort((a, b) => a.data.month - b.data.month);
+
+    return (
+      <section>
+        <h2>
+          {wp.data.id}: {wp.data.title}
+        </h2>
+        <p>
+          M{wp.data.startMonth}–M{wp.data.endMonth} · Lead: {lead?.data.shortName}
+        </p>
+        <p>{wp.data.objective}</p>
+
+        <h3>Tasks</h3>
+        <ul>
+          {wp.data.tasks.map((t) => (
+            <li>
+              {t.id} {t.title} (M{t.startMonth}–M{t.endMonth})
+            </li>
+          ))}
+        </ul>
+
+        <h3>Milestones</h3>
+        <ul>
+          {wpMilestones.map((m) => (
+            <li>
+              {m.data.id} (M{m.data.month}): {m.data.title}
+            </li>
+          ))}
+        </ul>
+      </section>
+    );
+  })}
+</BaseLayout>

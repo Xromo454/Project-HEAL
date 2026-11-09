@@ -1,0 +1,78 @@
+---
+import { FOOTER_LINKS, NAV, SITE, type NavItem } from '@/config/site';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = SITE.description } = Astro.props;
+const path = Astro.url.pathname;
+
+const isActive = (item: NavItem): boolean => {
+  if (item.href === '/') return path === '/';
+  if (item.children) return item.children.some((c) => path.startsWith(c.href));
+  return path.startsWith(item.href);
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title === SITE.name ? SITE.name : `${title} | ${SITE.name}`}</title>
+  </head>
+  <body>
+    <a href="#main">Skip to content</a>
+
+    <header>
+      <a href="/">{SITE.name}</a>
+      <nav aria-label="Main">
+        <ul>
+          {NAV.map((item) => (
+            <li>
+              <a href={item.href} aria-current={isActive(item) ? 'page' : undefined}>
+                {item.label}
+              </a>
+              {item.children && (
+                <ul>
+                  {item.children.map((child) => (
+                    <li>
+                      <a
+                        href={child.href}
+                        aria-current={path.startsWith(child.href) ? 'page' : undefined}
+                      >
+                        {child.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </header>
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <footer>
+      <p>
+        Funding strip: official logos go here (EU / Republic of Cyprus / RIF, RESTART 2016–2020).
+      </p>
+      <p>Project {SITE.projectNumber}</p>
+      <ul>
+        {FOOTER_LINKS.map((link) => (
+          <li>
+            <a href={link.href}>{link.label}</a>
+          </li>
+        ))}
+      </ul>
+    </footer>
+  </body>
+</html>

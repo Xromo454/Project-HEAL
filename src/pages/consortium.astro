@@ -1,0 +1,19 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+
+const partners = await getCollection('partners');
+---
+
+<BaseLayout title="Consortium & team">
+  <h1>Consortium & team</h1>
+
+  {partners.map((p) => (
+    <section>
+      <h2>{p.data.name}</h2>
+      <p>{p.data.role}</p>
+      <p>{p.data.description}</p>
+      <a href={p.data.website}>Website</a>
+    </section>
+  ))}
+</BaseLayout>

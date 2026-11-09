@@ -1,16 +1,17 @@
 ---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { SITE } from '@/config/site';
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" href="/favicon.ico" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>Astro</title>
-  </head>
-  <body>
-    <h1>Astro</h1>
-  </body>
-</html>
+<BaseLayout title={SITE.name}>
+  <h1>{SITE.fullName}</h1>
+  <p>{SITE.description}</p>
+
+  <h2>Key numbers</h2>
+  <ul>
+    <li>24 months</li>
+    <li>20 participants</li>
+    <li>6-month intervention</li>
+    <li>5 work packages</li>
+  </ul>
+</BaseLayout>

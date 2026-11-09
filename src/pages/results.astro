@@ -1,0 +1,45 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { PROJECT_START_DATE } from '@/config/site';
+import { STATUS_LABEL, deliverableStatus, projectMonth } from '@/lib/deliverableStatus';
+
+const currentMonth = projectMonth(PROJECT_START_DATE);
+const deliverables = (await getCollection('deliverables'))
+  .filter((d) => d.data.public)
+  .sort((a, b) => a.data.dueMonth - b.data.dueMonth);
+---
+
+<BaseLayout title="Results">
+  <h1>Results</h1>
+  <p>Public deliverables of the HEAL project.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th scope="col">Deliverable</th>
+        <th scope="col">Title</th>
+        <th scope="col">Due</th>
+        <th scope="col">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {deliverables.map((d) => (
+        <tr>
+          <td>{d.data.id}</td>
+          <td>{d.data.title}</td>
+          <td>M{d.data.dueMonth}</td>
+          <td>
+            {STATUS_LABEL[deliverableStatus(d.data, currentMonth)]}
+            {d.data.file && (
+              <>
+                {' · '}
+                <a href={d.data.file}>Download PDF</a>
+              </>
+            )}
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</BaseLayout>
