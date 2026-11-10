@@ -1,0 +1,100 @@
+[
+  {
+    "id": "D1",
+    "title": "Project Management Plan",
+    "workPackage": "WP1",
+    "dueMonth": 6,
+    "public": false
+  },
+  {
+    "id": "D2",
+    "title": "Interim Progress Report to RIF",
+    "workPackage": "WP1",
+    "dueMonth": 12,
+    "public": false
+  },
+  {
+    "id": "D3",
+    "title": "Final Progress Report to RIF",
+    "workPackage": "WP1",
+    "dueMonth": 24,
+    "public": false
+  },
+  {
+    "id": "D4",
+    "title": "Data Management Plan",
+    "workPackage": "WP2",
+    "dueMonth": 6,
+    "public": true
+  },
+  {
+    "id": "D5",
+    "title": "KTO Engagement Request",
+    "workPackage": "WP2",
+    "dueMonth": 13,
+    "public": false
+  },
+  {
+    "id": "D6",
+    "title": "Functional Digital Platform",
+    "workPackage": "WP3",
+    "dueMonth": 9,
+    "public": false
+  },
+  {
+    "id": "D7",
+    "title": "Integrated Ecosystem Foundation Pack",
+    "workPackage": "WP4",
+    "dueMonth": 4,
+    "public": false
+  },
+  {
+    "id": "D8",
+    "title": "Recruited Cohort & Baseline Characterization Report",
+    "workPackage": "WP4",
+    "dueMonth": 9,
+    "public": false
+  },
+  {
+    "id": "D9",
+    "title": "Intervention Fidelity and Outcomes Report",
+    "workPackage": "WP4",
+    "dueMonth": 16,
+    "public": false
+  },
+  {
+    "id": "D10",
+    "title": "Implementation Toolkit",
+    "workPackage": "WP2",
+    "dueMonth": 18,
+    "public": true
+  },
+  {
+    "id": "D11",
+    "title": "Manuscript Drafts (2)",
+    "workPackage": "WP2",
+    "dueMonth": 22,
+    "public": true
+  },
+  {
+    "id": "D12",
+    "title": "Final Project Report",
+    "workPackage": "WP2",
+    "dueMonth": 24,
+    "public": true
+  },
+  {
+    "id": "D13",
+    "title": "Statistical Analysis Report",
+    "workPackage": "WP5",
+    "dueMonth": 23,
+    "public": false
+  },
+  {
+    "id": "D14",
+    "title": "Final Research Database",
+    "workPackage": "WP5",
+    "dueMonth": 24,
+    "public": true
+  }
+]

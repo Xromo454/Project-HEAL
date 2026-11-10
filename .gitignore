@@ -1,0 +1,22 @@
+# Ignore everything in the root by default
+/*
+
+# Except the repo's own files
+!/.gitignore
+!/README.md
+!/.gitattributes
+
+# Only our theme from themes/
+!/themes/
+/themes/*
+!/themes/heal/
+
+# Only our plugin from plugins/
+!/plugins/
+/plugins/*
+!/plugins/heal-data/
+
+# System junk inside allowed folders
+.DS_Store
+Thumbs.db
+*.log

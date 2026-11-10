@@ -1,0 +1,12 @@
+# Text files: always store and check out with LF line endings
+* text=auto eol=lf
+
+# Binary files: never touch them (they are not text)
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.avif binary
+*.ico binary
+*.pdf binary
+*.woff2 binary

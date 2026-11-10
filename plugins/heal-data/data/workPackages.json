@@ -1,0 +1,110 @@
+[
+  {
+    "id": "WP1",
+    "title": "Project Management, Coordination & Ethics",
+    "lead": "cut",
+    "startMonth": 1,
+    "endMonth": 24,
+    "objective": "To establish a robust project management framework, secure all necessary ethical approvals, finalize the study protocol, and ensure efficient coordination and communication among all consortium partners from the project's outset.",
+    "tasks": [
+      { "id": "T1.1", "title": "Project Management Framework", "startMonth": 1, "endMonth": 3 },
+      {
+        "id": "T1.2",
+        "title": "Protocol Finalization & Ethics Submission",
+        "startMonth": 1,
+        "endMonth": 3
+      },
+      { "id": "T1.3", "title": "Consortium Agreement & Kick-off", "startMonth": 1, "endMonth": 2 }
+    ]
+  },
+  {
+    "id": "WP2",
+    "title": "Dissemination & Exploitation",
+    "lead": "cut",
+    "startMonth": 1,
+    "endMonth": 24,
+    "objective": "To disseminate the project's findings to academic, policy, and public audiences, and actively promote the exploitation of the results, including the finalized implementation toolkit, and ensure comprehensive open science data management via a standalone technical report.",
+    "tasks": [
+      { "id": "T2.1", "title": "Academic Dissemination", "startMonth": 12, "endMonth": 24 },
+      {
+        "id": "T2.2",
+        "title": "Stakeholder Engagement, Toolkit Finalization & Public Consultation",
+        "startMonth": 4,
+        "endMonth": 18
+      },
+      {
+        "id": "T2.3",
+        "title": "Public Dissemination & Final Reporting",
+        "startMonth": 1,
+        "endMonth": 24
+      },
+      {
+        "id": "T2.4",
+        "title": "Core Data Management & Knowledge Transfer Planning",
+        "startMonth": 1,
+        "endMonth": 24
+      }
+    ]
+  },
+  {
+    "id": "WP3",
+    "title": "Platform & JITAI",
+    "lead": "cut",
+    "startMonth": 3,
+    "endMonth": 9,
+    "objective": "To develop, test, and deploy the functional digital platform, including the Just-in-Time Adaptive Intervention (JITAI) engine, verification logic, and data pipelines necessary for delivering the intervention.",
+    "tasks": [
+      { "id": "T3.1", "title": "Platform Development", "startMonth": 3, "endMonth": 6 },
+      { "id": "T3.2", "title": "JITAI & Verification Engine", "startMonth": 4, "endMonth": 7 },
+      { "id": "T3.3", "title": "Data Pipeline & Security", "startMonth": 5, "endMonth": 8 }
+    ]
+  },
+  {
+    "id": "WP4",
+    "title": "Integrated Field Operations",
+    "lead": "cut",
+    "startMonth": 1,
+    "endMonth": 21,
+    "objective": "To formally establish the partner ecosystem, recruit the pilot cohort, and execute the 6-month active intervention phase, integrating all operational components from setup to delivery.",
+    "tasks": [
+      {
+        "id": "T4.1",
+        "title": "Partnership Formalization & Ecosystem Setup",
+        "startMonth": 1,
+        "endMonth": 2
+      },
+      {
+        "id": "T4.2",
+        "title": "Participant Recruitment & Baseline",
+        "startMonth": 7,
+        "endMonth": 10
+      },
+      { "id": "T4.3", "title": "Active Intervention Delivery", "startMonth": 10, "endMonth": 15 },
+      {
+        "id": "T4.4",
+        "title": "Fidelity, Safety & System Monitoring",
+        "startMonth": 10,
+        "endMonth": 16
+      }
+    ]
+  },
+  {
+    "id": "WP5",
+    "title": "Data Analysis & Interpretation",
+    "lead": "cut",
+    "startMonth": 18,
+    "endMonth": 24,
+    "objective": "To perform primary analyses (feasibility metrics and preliminary effectiveness), causal mediation (COM-B), moderation analyses (exposome), and produce the statistical analysis report.",
+    "tasks": [
+      { "id": "T5.1", "title": "Data Integration & Preparation", "startMonth": 18, "endMonth": 19 },
+      {
+        "id": "T5.2",
+        "title": "Exploratory Efficacy & Mediation Analysis",
+        "startMonth": 19,
+        "endMonth": 22
+      },
+      { "id": "T5.3", "title": "Mechanistic Modelling", "startMonth": 20, "endMonth": 23 },
+      { "id": "T5.4", "title": "Data Curation & Reporting", "startMonth": 23, "endMonth": 24 }
+    ]
+  }
+]
