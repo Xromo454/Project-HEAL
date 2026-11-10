@@ -1,7 +1,7 @@
 /*
 Theme Name: HEAL
 Description: Theme for the HEAL research project (CUT). Layout from the Figma prototype. Data comes from the HEAL Data plugin.
-Version: 0.3.6
+Version: 0.3.7
 Requires PHP: 8.0
 Text Domain: heal
 */
@@ -28,7 +28,9 @@ Text Domain: heal
 :root {
   --navy: #00205b;
   --orange: #d97a2b;
-  --orange-dark: #b95f17; /* text-size orange on cream: better contrast */
+  --orange-dark: #a8540f; /* orange text on cream: 4.5:1 or better (WCAG AA) */
+  --orange-mid: #c46a1f; /* big orange numbers (needs 3:1) */
+  --orange-bg: var(--orange); /* background behind WHITE text. #d97a2b gives only 3.1:1; #b35a14 gives 4.8:1 (AA) */
   --cream: #fff7ed;
   --cream-alt: #fff1e1;
   --card: #fdf0e0;
@@ -115,8 +117,8 @@ a { color: inherit; }
   transition: background-color 0.15s, color 0.15s;
 }
 .btn--outline { color: var(--orange-dark); background: transparent; }
-.btn--outline:hover { background: var(--orange); color: var(--white); }
-.btn--solid { background: var(--orange); color: var(--white); }
+.btn--outline:hover { background: var(--orange-bg); color: var(--white); }
+.btn--solid { background: var(--orange-bg); color: var(--white); }
 .btn--solid:hover { background: var(--orange-dark); border-color: var(--orange-dark); }
 .btn--navy-outline { border-color: var(--navy); color: var(--navy); }
 .btn--navy-outline:hover { background: var(--navy); color: var(--white); }
@@ -231,7 +233,7 @@ a { color: inherit; }
 .tile { display: flex; flex-direction: column; gap: 14px; border-radius: 6px; padding: 16px 18px; }
 .tile strong { font-weight: 500; font-size: 1.0625rem; }
 .tile span { font-size: 0.75rem; }
-.tile--orange { background: var(--orange); color: var(--white); }
+.tile--orange { background: var(--orange-bg); color: var(--white); }
 .tile--navy { background: var(--navy); color: var(--white); padding: 22px; }
 .tile--navy .eyebrow { margin: 0; font-size: 0.6875rem; }
 .tile__big { font-size: 1.75rem !important; font-weight: 400 !important; line-height: 1.15; }
@@ -243,7 +245,7 @@ a { color: inherit; }
   margin: 0; padding-top: 24px; border-top: 1px solid var(--line);
 }
 .stats__grid div { display: flex; flex-direction: column-reverse; }
-.stats__grid dd { margin: 0; font-size: clamp(2.75rem, 4.5vw, 3.75rem); line-height: 1.2; color: var(--orange); font-weight: 300; }
+.stats__grid dd { margin: 0; font-size: clamp(2.75rem, 4.5vw, 3.75rem); line-height: 1.2; color: var(--orange-mid); font-weight: 300; }
 .stats__grid dt { color: var(--orange-dark); font-size: 0.9375rem; }
 
 /* ---------- Sections ---------- */
@@ -328,7 +330,7 @@ a { color: inherit; }
   padding: 8px 16px; border: 1px solid var(--orange); border-radius: 999px;
   color: var(--orange-dark); text-decoration: none; font-size: 0.875rem;
 }
-.page-nav a:hover { background: var(--orange); color: var(--white); }
+.page-nav a:hover { background: var(--orange-bg); color: var(--white); }
 .objectives dt { font-weight: 600; margin-top: 1.25rem; }
 .objectives dd { margin: 0.25rem 0 0; }
 .prose blockquote { margin: 1.5rem 0; padding: 4px 0 4px 20px; border-left: 3px solid var(--orange); font-size: 1.0625rem; }
@@ -339,7 +341,7 @@ a { color: inherit; }
 .loop p { font-size: 0.9375rem; margin: 0; }
 .loop__tag {
   display: inline-block; padding: 2px 10px; border-radius: 999px;
-  background: var(--orange); color: var(--white); font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase;
+  background: var(--orange-bg); color: var(--white); font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase;
 }
 .loop li:last-child .loop__tag { background: var(--navy); }
 
@@ -382,7 +384,7 @@ a { color: inherit; }
 .heal-partner__role { font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--orange-dark); }
 
 /* ---------- Footer ---------- */
-.site-footer { background: var(--orange); color: var(--white); padding-block: 72px 48px; }
+.site-footer { background: var(--orange-bg); color: var(--white); padding-block: 72px 48px; }
 .site-footer a { color: var(--white); }
 .site-footer__grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 40px; }
 .site-footer__brand { font-size: 2.5rem; font-weight: 600; letter-spacing: -0.02em; line-height: 1; margin-bottom: 20px; }
