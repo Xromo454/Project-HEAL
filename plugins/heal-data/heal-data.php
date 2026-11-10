@@ -20,3 +20,4 @@ require_once __DIR__ . '/includes/settings.php';
 require_once __DIR__ . '/includes/shortcodes.php';
 require_once __DIR__ . '/includes/gallery.php';
 require_once __DIR__ . '/includes/pages.php';
+require_once __DIR__ . '/includes/seo.php';
