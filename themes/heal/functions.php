@@ -11,6 +11,8 @@ if (!defined('ABSPATH')) {
 add_action('after_setup_theme', function () {
     add_theme_support('title-tag');
     add_theme_support('html5', ['search-form', 'gallery', 'caption', 'style', 'script']);
+    add_theme_support('post-thumbnails'); // featured image on news posts (also used for link previews)
+    add_theme_support('automatic-feed-links'); // RSS link in the page head
 
     // The block editor uses the same fonts, colours and content styles as the site.
     add_theme_support('editor-styles');
@@ -21,11 +23,23 @@ add_action('wp_enqueue_scripts', function () {
     $ver = wp_get_theme()->get('Version');
     wp_enqueue_style('heal', get_stylesheet_uri(), [], $ver);
     wp_enqueue_script('heal-nav', get_theme_file_uri('assets/nav.js'), [], $ver, ['strategy' => 'defer', 'in_footer' => true]);
-    // Lightbox on any page that has a Gallery block.
-    if (is_singular() && has_block('core/gallery')) {
+    // Lightbox on any page with a Gallery block, an Image block or a classic [gallery].
+    if (is_singular() && (has_block('core/gallery') || has_block('core/image') || has_shortcode((string) get_post_field('post_content'), 'gallery'))) {
         wp_enqueue_script('heal-gallery', get_theme_file_uri('assets/gallery.js'), [], $ver, ['strategy' => 'defer', 'in_footer' => true]);
     }
 });
+
+/** Classic [gallery] shortcode: use the large photo and link to the file unless the editor chose otherwise. */
+add_filter('shortcode_atts_gallery', function (array $out, array $pairs, $atts): array {
+    $atts = (array) $atts;
+    if (empty($atts['size'])) {
+        $out['size'] = 'large';
+    }
+    if (empty($atts['link'])) {
+        $out['link'] = 'file';
+    }
+    return $out;
+}, 10, 3);
 
 /** Main navigation. Same items as NAV in the Astro site.ts. Links point to page slugs. */
 function heal_nav_items(): array
