@@ -42,6 +42,9 @@ add_shortcode('heal_results', function () {
         <?php endforeach; ?>
         </tbody>
     </table>
+
+    <h2 class="heal-results__heading">Publications</h2>
+    <?= function_exists('heal_publications_html') ? heal_publications_html() : '' ?>
     <?php return ob_get_clean();
 });
 

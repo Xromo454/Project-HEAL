@@ -1,7 +1,7 @@
 /*
 Theme Name: HEAL
 Description: Theme for the HEAL research project (CUT). Layout from the Figma prototype. Data comes from the HEAL Data plugin.
-Version: 0.3.5
+Version: 0.3.6
 Requires PHP: 8.0
 Text Domain: heal
 */
@@ -487,3 +487,37 @@ a { color: inherit; }
 .lightbox, .lightbox * { user-select: none; -webkit-user-select: none; }
 .lightbox__img { -webkit-user-drag: none; -webkit-tap-highlight-color: transparent; }
 .lightbox__img::selection, .lightbox ::selection { background: transparent; }
+
+/* ---------- News and publications (HEAL Data plugin) ---------- */
+.news-list { margin: 0 0 32px; }
+.news-item { padding: 24px 0; border-top: 1px solid var(--line); }
+.news-item:last-child { border-bottom: 1px solid var(--line); }
+.news-item__date { display: block; margin-bottom: 8px; font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--orange-dark); }
+.news-item__title { margin: 0 0 8px; font-size: 1.375rem; }
+.news-item__title a { text-decoration: none; }
+.news-item__title a:hover { text-decoration: underline; text-underline-offset: 4px; }
+.news-item__summary { margin: 0 0 8px; font-size: 0.9375rem; }
+.news-item__tags { margin: 0; font-size: 0.8125rem; color: var(--muted); }
+.news-item__tags a { margin-right: 8px; text-decoration: none; }
+.news-item__tags a:hover { text-decoration: underline; }
+.news-pagination ul { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 32px; padding: 0; list-style: none; }
+.news-pagination li { margin: 0; }
+.news-pagination a,
+.news-pagination span { display: inline-block; padding: 6px 14px; border: 1px solid var(--line); border-radius: 999px; font-size: 0.875rem; text-decoration: none; }
+.news-pagination a:hover { border-color: var(--navy); }
+.news-pagination .current { background: var(--navy); border-color: var(--navy); color: var(--white); }
+.news-meta { margin: 0 0 1.5rem; font-size: 0.875rem; color: var(--muted); }
+.news-meta a { margin-left: 8px; text-decoration: none; }
+.news-image { margin: 0 0 2rem; }
+.news-image img { display: block; width: 100%; height: auto; border-radius: 12px; }
+.eyebrow a { text-decoration: none; }
+.post-item { padding: 20px 0; border-top: 1px solid var(--line); }
+.post-item h2 { margin-top: 0; font-size: 1.375rem; }
+.post-item h2 a { text-decoration: none; }
+
+.pub-list { margin: 0 0 32px; padding: 0 !important; list-style: none; }
+.pub-list li { margin: 0; padding: 16px 0; border-top: 1px solid var(--line); font-size: 0.9375rem; }
+.pub-list li:last-child { border-bottom: 1px solid var(--line); }
+.pub__title { font-weight: 500; }
+.pub-list .badge { margin-left: 8px; }
+.heal-results__heading { margin-top: 3rem; }

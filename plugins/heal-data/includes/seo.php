@@ -162,15 +162,19 @@ add_action('wp_head', function () {
         $title = HEAL_SITE['name'];
     }
 
-    $image = apply_filters(
-        'heal_og_image',
-        file_exists(get_theme_file_path('assets/og-default.png')) ? get_theme_file_uri('assets/og-default.png') : ''
-    );
+    // Link preview image: the post's featured image, else the theme's default image.
+    $image = '';
+    if (is_singular() && has_post_thumbnail(get_queried_object_id())) {
+        $image = (string) get_the_post_thumbnail_url(get_queried_object_id(), 'large');
+    } elseif (file_exists(get_theme_file_path('assets/og-default.png'))) {
+        $image = get_theme_file_uri('assets/og-default.png');
+    }
+    $image = apply_filters('heal_og_image', $image);
 
     $tags = [
         ['name', 'description', $desc],
         ['property', 'og:site_name', HEAL_SITE['name']],
-        ['property', 'og:type', 'website'],
+        ['property', 'og:type', is_singular('post') ? 'article' : 'website'],
         ['property', 'og:title', $title],
         ['property', 'og:description', $desc],
         ['property', 'og:url', $url],

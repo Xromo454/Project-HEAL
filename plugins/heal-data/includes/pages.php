@@ -15,7 +15,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-const HEAL_PAGES_VERSION = 5; // 4: gallery page, 5: gallery from Media Library blocks
+const HEAL_PAGES_VERSION = 6; // 4: gallery page, 5: gallery from Media Library blocks, 6: news list on the News page
 const HEAL_SEED_HASH_META = '_heal_seed_hash';
 
 /** slug => [title, parent slug or null, menu order] */
