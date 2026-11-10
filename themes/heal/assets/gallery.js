@@ -31,9 +31,14 @@ if (figures.length && typeof HTMLDialogElement === 'function') {
   const close = () => dialog.close();
 
   dialog.querySelector('.lightbox__close').addEventListener('click', close);
-  // Click on the dark backdrop (outside the photo) closes too.
+  // Click on the dark backdrop (outside the photo) closes too, but not the second click of a
+  // double-click on the thumbnail, and a double-click never selects (tints) the photo.
+  let openedAt = 0;
+  dialog.addEventListener('mousedown', (e) => {
+    if (e.detail > 1) e.preventDefault();
+  });
   dialog.addEventListener('click', (e) => {
-    if (e.target === dialog) close();
+    if (e.target === dialog && performance.now() - openedAt > 500) close();
   });
   dialog.addEventListener('close', () => {
     if (dialog.open) return; // reopened right away
@@ -48,6 +53,8 @@ if (figures.length && typeof HTMLDialogElement === 'function') {
     caption.innerHTML = cap ? cap.innerHTML : '';
     caption.hidden = !cap || !cap.textContent.trim();
     document.body.classList.add('has-lightbox');
+    openedAt = performance.now();
+    getSelection()?.removeAllRanges();
     dialog.showModal();
   };
 

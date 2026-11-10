@@ -1,7 +1,7 @@
 /*
 Theme Name: HEAL
 Description: Theme for the HEAL research project (CUT). Layout from the Figma prototype. Data comes from the HEAL Data plugin.
-Version: 0.3.4
+Version: 0.3.5
 Requires PHP: 8.0
 Text Domain: heal
 */
@@ -450,10 +450,14 @@ a { color: inherit; }
 .wp-block-gallery.has-nested-images figure.wp-block-image > a {
   display: block; overflow: hidden; border-radius: 12px; background: var(--card);
 }
+/* Every photo is the same shape (4:5), so rows line up whatever the proportions of the original.
+   On hover the photo only gets a little darker (it does not move). Linked and unlinked photos behave the same. */
 .wp-block-gallery.has-nested-images figure.wp-block-image img {
-  display: block; width: 100%; height: auto; border-radius: 12px; transition: transform 300ms ease;
+  display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 12px;
+  transition: filter 200ms ease; user-select: none; -webkit-user-select: none; -webkit-user-drag: none;
+  -webkit-tap-highlight-color: transparent;
 }
-.wp-block-gallery.has-nested-images figure.wp-block-image > a:hover img { transform: scale(1.03); }
+.wp-block-gallery.has-nested-images figure.wp-block-image:hover img { filter: brightness(0.94); }
 /* WordPress puts captions over the photo; here they sit under it */
 .wp-block-gallery.has-nested-images figure.wp-block-image:has(figcaption)::before { display: none; }
 .wp-block-gallery.has-nested-images figure.wp-block-image figcaption,
@@ -471,6 +475,15 @@ a { color: inherit; }
 .gallery-columns-4 { grid-template-columns: repeat(4, 1fr); }
 .gallery .gallery-item { margin: 0; }
 .gallery .gallery-item a { display: block; overflow: hidden; border-radius: 12px; background: var(--card); }
-.gallery .gallery-item img { display: block; width: 100%; height: auto; border-radius: 12px; }
+.gallery .gallery-item img {
+  display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 12px;
+  transition: filter 200ms ease; user-select: none; -webkit-user-select: none; -webkit-user-drag: none;
+}
+.gallery .gallery-item:hover img { filter: brightness(0.94); }
 .gallery-caption { font-size: 0.875rem; line-height: 1.5; padding-top: 4px; }
 @media (max-width: 599px) { .gallery, .gallery-columns-3, .gallery-columns-4 { grid-template-columns: repeat(2, 1fr); } }
+
+/* Lightbox: the photo must never get the browser's blue "selected" tint (double-click, drag) */
+.lightbox, .lightbox * { user-select: none; -webkit-user-select: none; }
+.lightbox__img { -webkit-user-drag: none; -webkit-tap-highlight-color: transparent; }
+.lightbox__img::selection, .lightbox ::selection { background: transparent; }

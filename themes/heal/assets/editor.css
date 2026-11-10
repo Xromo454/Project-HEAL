@@ -107,7 +107,7 @@ blockquote,
 /* Gallery block: same look as on the site */
 .wp-block-gallery.has-nested-images.has-nested-images { --wp--style--unstable-gallery-gap: 24px; gap: 24px; }
 .wp-block-gallery.has-nested-images figure.wp-block-image { margin: 0; flex-grow: 0; }
-.wp-block-gallery.has-nested-images figure.wp-block-image img { border-radius: 12px; }
+.wp-block-gallery.has-nested-images figure.wp-block-image img { border-radius: 12px; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; }
 .wp-block-gallery.has-nested-images figure.wp-block-image:has(figcaption)::before { display: none; }
 .wp-block-gallery.has-nested-images figure.wp-block-image figcaption,
 .wp-block-gallery.has-nested-images figure.wp-block-image figcaption.wp-element-caption {
