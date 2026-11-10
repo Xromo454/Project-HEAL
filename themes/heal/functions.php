@@ -11,13 +11,18 @@ if (!defined('ABSPATH')) {
 add_action('after_setup_theme', function () {
     add_theme_support('title-tag');
     add_theme_support('html5', ['search-form', 'gallery', 'caption', 'style', 'script']);
+
+    // The block editor uses the same fonts, colours and content styles as the site.
+    add_theme_support('editor-styles');
+    add_editor_style('assets/editor.css');
 });
 
 add_action('wp_enqueue_scripts', function () {
     $ver = wp_get_theme()->get('Version');
     wp_enqueue_style('heal', get_stylesheet_uri(), [], $ver);
     wp_enqueue_script('heal-nav', get_theme_file_uri('assets/nav.js'), [], $ver, ['strategy' => 'defer', 'in_footer' => true]);
-    if (is_page('gallery')) {
+    // Lightbox on any page that has a Gallery block.
+    if (is_singular() && has_block('core/gallery')) {
         wp_enqueue_script('heal-gallery', get_theme_file_uri('assets/gallery.js'), [], $ver, ['strategy' => 'defer', 'in_footer' => true]);
     }
 });

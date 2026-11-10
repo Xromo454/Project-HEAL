@@ -1,6 +1,7 @@
 // Gallery lightbox: opens the photo in a <dialog> with a close (×) button.
 // Without JS the link still opens the plain image.
-const links = document.querySelectorAll('.gallery-item__link');
+// Photos are WordPress Gallery blocks (Media Library); each links to the full file.
+const links = document.querySelectorAll('.wp-block-gallery .wp-block-image > a');
 
 if (links.length && typeof HTMLDialogElement === 'function') {
   const dialog = document.createElement('dialog');

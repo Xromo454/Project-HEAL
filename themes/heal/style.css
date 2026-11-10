@@ -1,7 +1,7 @@
 /*
 Theme Name: HEAL
 Description: Theme for the HEAL research project (CUT). Layout from the Figma prototype. Data comes from the HEAL Data plugin.
-Version: 0.2.0
+Version: 0.3.3
 Requires PHP: 8.0
 Text Domain: heal
 */
@@ -439,3 +439,26 @@ a { color: inherit; }
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; }
 }
+
+/* ---------- Gallery made with the WordPress Gallery block (Media Library) ---------- */
+.prose--wide { max-width: calc(var(--container) + 2 * var(--gutter)); }
+.prose--wide > p,
+.prose--wide > h2 { max-width: 860px; }
+
+.wp-block-gallery.has-nested-images.has-nested-images { --wp--style--unstable-gallery-gap: 24px; gap: 24px; margin: 0 0 48px; }
+.wp-block-gallery.has-nested-images figure.wp-block-image { margin: 0; flex-grow: 0; }
+.wp-block-gallery.has-nested-images figure.wp-block-image > a {
+  display: block; overflow: hidden; border-radius: 12px; background: var(--card);
+}
+.wp-block-gallery.has-nested-images figure.wp-block-image img {
+  display: block; width: 100%; height: auto; border-radius: 12px; transition: transform 300ms ease;
+}
+.wp-block-gallery.has-nested-images figure.wp-block-image > a:hover img { transform: scale(1.03); }
+/* WordPress puts captions over the photo; here they sit under it */
+.wp-block-gallery.has-nested-images figure.wp-block-image:has(figcaption)::before { display: none; }
+.wp-block-gallery.has-nested-images figure.wp-block-image figcaption,
+.wp-block-gallery.has-nested-images figure.wp-block-image figcaption.wp-element-caption {
+  position: static; background: none; color: var(--navy);
+  font-size: 0.875rem; line-height: 1.5; padding: 12px 0 0; text-align: left; max-height: none; overflow: visible;
+}
+.wp-block-gallery figcaption a { color: inherit; }

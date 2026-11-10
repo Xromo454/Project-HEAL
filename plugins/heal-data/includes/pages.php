@@ -15,7 +15,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-const HEAL_PAGES_VERSION = 4; // 4: gallery page
+const HEAL_PAGES_VERSION = 5; // 4: gallery page, 5: gallery from Media Library blocks
 const HEAL_SEED_HASH_META = '_heal_seed_hash';
 
 /** slug => [title, parent slug or null, menu order] */
@@ -43,6 +43,9 @@ function heal_page_content(string $slug): string
 {
     $file = plugin_dir_path(__DIR__) . 'content/pages/' . $slug . '.html';
     $html = is_readable($file) ? (string) file_get_contents($file) : '';
+    if ($slug === 'gallery' && function_exists('heal_gallery_blocks')) {
+        $html = trim($html) . "\n\n" . heal_gallery_blocks(); // photos come from the Media Library
+    }
     return trim(str_replace('{home}', untrailingslashit(home_url()), $html));
 }
 
@@ -74,8 +77,11 @@ function heal_write_page(array $args): int|WP_Error
     return $id;
 }
 
-/** Creates missing pages, refreshes untouched ones. Returns what it did. */
-function heal_seed_pages(): array
+/**
+ * Creates missing pages, refreshes untouched ones. Returns what it did.
+ * With $only (a list of slugs) it handles just those pages.
+ */
+function heal_seed_pages(array $only = []): array
 {
     $done = ['created' => [], 'updated' => [], 'kept' => []];
     $ids = [];
@@ -83,8 +89,15 @@ function heal_seed_pages(): array
     foreach (heal_page_list() as $slug => [$title, $parent, $order]) {
         $parentId = $parent ? ($ids[$parent] ?? 0) : 0;
         $path = $parent ? "$parent/$slug" : $slug;
-        $content = heal_page_content($slug);
         $existing = get_page_by_path($path, OBJECT, 'page');
+
+        if ($only && !in_array($slug, $only, true)) {
+            if ($existing) {
+                $ids[$slug] = $existing->ID;
+            }
+            continue;
+        }
+        $content = heal_page_content($slug);
 
         if (!$existing) {
             $id = heal_write_page([
