@@ -1,18 +1,22 @@
 <?php
 /**
- * Creates the site pages from content/pages/*.html.
+ * Creates and refreshes the site pages from content/pages/*.html.
  *
- * - Runs once per HEAL_PAGES_VERSION (bump it to create pages added later).
- * - Only creates pages that do not exist yet: it never overwrites a page someone edited.
- * - "{home}" in the HTML becomes the site URL, so links work on a sub-site too.
- * - Content goes into one "Custom HTML" block, so WordPress does not reformat it.
+ * - The files hold WordPress block markup, so the PI edits normal blocks in the editor.
+ * - Runs once per HEAL_PAGES_VERSION. Bump it after changing a content file.
+ * - Missing pages are created.
+ * - An existing page is refreshed from its file ONLY if nobody edited it in the admin.
+ *   We store a hash of what we wrote (_heal_seed_hash); if the content no longer
+ *   matches the hash, a person changed it and we leave it alone.
+ * - "{home}" in the files becomes the site URL, so links also work on a sub-site.
  */
 
 if (!defined('ABSPATH')) {
     exit;
 }
 
-const HEAL_PAGES_VERSION = 1;
+const HEAL_PAGES_VERSION = 3;
+const HEAL_SEED_HASH_META = '_heal_seed_hash';
 
 /** slug => [title, parent slug or null, menu order] */
 function heal_page_list(): array
@@ -38,52 +42,88 @@ function heal_page_content(string $slug): string
 {
     $file = plugin_dir_path(__DIR__) . 'content/pages/' . $slug . '.html';
     $html = is_readable($file) ? (string) file_get_contents($file) : '';
-    if ($slug === 'results' && $html === '') {
-        $html = "<p class=\"lead\">Public deliverables of the HEAL project. Other deliverables are confidential under the grant agreement.</p>\n\n[heal_results]";
-    }
-    $html = str_replace('{home}', untrailingslashit(home_url()), $html);
-    return "<!-- wp:html -->\n" . trim($html) . "\n<!-- /wp:html -->";
+    return trim(str_replace('{home}', untrailingslashit(home_url()), $html));
 }
 
-/** Creates missing pages. Returns the slugs it created. */
+/**
+ * Pages made by version 1 of this plugin had no hash and were a single Custom HTML block.
+ * Treat exactly that shape as "not edited".
+ */
+function heal_is_legacy_seed(string $content): bool
+{
+    return preg_match_all('/<!--\s*wp:html\s*-->/', $content) === 1
+        && preg_match('/<!--\s*wp:(?!html\b)/', $content) === 0;
+}
+
+/**
+ * Writes content without WordPress' kses filter: the text comes from our own plugin files.
+ * (On a visitor's request kses is active and would strip tags like <details>.)
+ */
+function heal_write_page(array $args): int|WP_Error
+{
+    kses_remove_filters();
+    $args['post_content'] = wp_slash($args['post_content']);
+    $id = !empty($args['ID']) ? wp_update_post($args, true) : wp_insert_post($args, true);
+    kses_init();
+
+    if (!is_wp_error($id) && $id) {
+        // Hash what is really stored, not what we sent.
+        update_post_meta($id, HEAL_SEED_HASH_META, md5((string) get_post_field('post_content', $id, 'raw')));
+    }
+    return $id;
+}
+
+/** Creates missing pages, refreshes untouched ones. Returns what it did. */
 function heal_seed_pages(): array
 {
-    $created = [];
+    $done = ['created' => [], 'updated' => [], 'kept' => []];
     $ids = [];
 
     foreach (heal_page_list() as $slug => [$title, $parent, $order]) {
         $parentId = $parent ? ($ids[$parent] ?? 0) : 0;
         $path = $parent ? "$parent/$slug" : $slug;
+        $content = heal_page_content($slug);
         $existing = get_page_by_path($path, OBJECT, 'page');
 
-        if ($existing) {
-            $ids[$slug] = $existing->ID;
+        if (!$existing) {
+            $id = heal_write_page([
+                'post_type'    => 'page',
+                'post_status'  => 'publish',
+                'post_title'   => $title,
+                'post_name'    => $slug,
+                'post_parent'  => $parentId,
+                'menu_order'   => $order,
+                'post_content' => $content,
+            ]);
+            if (!is_wp_error($id)) {
+                $ids[$slug] = $id;
+                $done['created'][] = $path;
+            }
             continue;
         }
 
-        $id = wp_insert_post([
-            'post_type'    => 'page',
-            'post_status'  => 'publish',
-            'post_title'   => $title,
-            'post_name'    => $slug,
-            'post_parent'  => $parentId,
-            'menu_order'   => $order,
-            'post_content' => heal_page_content($slug),
-        ], true);
+        $ids[$slug] = $existing->ID;
+        $storedHash = (string) get_post_meta($existing->ID, HEAL_SEED_HASH_META, true);
+        $edited = $storedHash !== ''
+            ? $storedHash !== md5($existing->post_content)
+            : !heal_is_legacy_seed($existing->post_content);
 
-        if (!is_wp_error($id)) {
-            $ids[$slug] = $id;
-            $created[] = $path;
+        if ($edited) {
+            $done['kept'][] = $path;
+            continue;
         }
+
+        heal_write_page(['ID' => $existing->ID, 'post_content' => $content]);
+        $done['updated'][] = $path;
     }
-    return $created;
+    return $done;
 }
 
 add_action('init', function () {
     if ((int) get_option('heal_pages_version', 0) >= HEAL_PAGES_VERSION) {
         return;
     }
-    // Set the flag first, so two requests at once cannot create duplicates.
+    // Set the flag first, so two requests at once cannot run the seeding twice.
     update_option('heal_pages_version', HEAL_PAGES_VERSION);
-    heal_seed_pages();
+    update_option('heal_pages_last_run', heal_seed_pages(), false);
 }, 20);
