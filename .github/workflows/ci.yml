@@ -1,0 +1,46 @@
+name: CI
+
+# Checks for the HEAL WordPress theme and plugin. Runs on every push and pull request.
+on:
+  push:
+    branches: [feat/wordpress]
+  pull_request:
+    branches: [feat/wordpress]
+  workflow_dispatch:
+
+jobs:
+  php:
+    name: PHP syntax (${{ matrix.php }})
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php: ['8.0', '8.3'] # the plugin requires PHP 8.0 or newer
+    steps:
+      - uses: actions/checkout@v5
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          tools: none
+      - name: Lint every PHP file
+        run: |
+          status=0
+          while IFS= read -r -d '' f; do
+            out=$(php -l "$f" 2>&1) || { echo "$out"; status=1; }
+          done < <(find plugins themes -name '*.php' -print0)
+          exit $status
+
+  project:
+    name: Data, content and JS
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+      - name: JavaScript syntax
+        run: |
+          status=0
+          for f in themes/heal/assets/*.js; do node --check "$f" || status=1; done
+          exit $status
+      - name: Data and content checks
+        run: node scripts/check.mjs

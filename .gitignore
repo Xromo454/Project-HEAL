@@ -6,6 +6,10 @@
 !/README.md
 !/.gitattributes
 
+# CI and its check script
+!/.github/
+!/scripts/
+
 # Only our theme from themes/
 !/themes/
 /themes/*
