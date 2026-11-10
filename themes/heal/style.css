@@ -121,6 +121,57 @@ a { color: inherit; }
 .btn--navy-outline { border-color: var(--navy); color: var(--navy); }
 .btn--navy-outline:hover { background: var(--navy); color: var(--white); }
 
+/* ---------- Gallery (port of the Astro gallery) ---------- */
+.gallery-intro { padding-bottom: 0; }
+.gallery-jump { padding: 24px 0 48px; }
+.gallery-jump ul { display: flex; flex-wrap: wrap; gap: 12px; list-style: none; margin: 0; padding: 0; }
+.gallery-jump a {
+  display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 0 16px;
+  border: 1px solid var(--line); border-radius: 999px; font-size: 0.875rem; text-decoration: none;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+.gallery-jump a:hover { background: var(--cream-alt); border-color: var(--navy); }
+.gallery-jump__count { font-size: 0.75rem; font-weight: 600; }
+
+/* Masonry grid: photos keep their shape. 1 / 2 / 3 columns (moodboard: 2). */
+.gallery-grid { columns: 1; column-gap: 24px; list-style: none; margin: 0; padding: 0; }
+.gallery-grid > li { break-inside: avoid; margin-bottom: 24px; }
+@media (min-width: 768px) { .gallery-grid { columns: 2; } }
+@media (min-width: 1024px) { .gallery-grid { columns: 3; } .gallery-grid--wide { columns: 2; } }
+
+.gallery-item { display: flex; flex-direction: column; gap: 12px; margin: 0; }
+.gallery-item__link { display: block; overflow: hidden; border-radius: 12px; background: var(--card); }
+.gallery-item img { display: block; width: 100%; height: auto; transition: transform 300ms ease; }
+.gallery-item__link:hover img { transform: scale(1.03); }
+.gallery-item figcaption { font-size: 0.875rem; line-height: 1.5; }
+.gallery-item__credit { display: block; font-size: 0.75rem; color: var(--muted); }
+.gallery-item__credit a { color: inherit; }
+
+.gallery-group + .gallery-group { margin-top: 64px; }
+.gallery-group__title { padding-top: 20px; border-top: 1px solid var(--line); margin-bottom: 20px; }
+.gallery-group__place { display: block; margin: 24px 0 16px; }
+
+/* Lightbox (assets/gallery.js) */
+.has-lightbox { overflow: hidden; }
+.lightbox {
+  width: 100vw; height: 100vh; max-width: none; max-height: none; margin: 0; padding: 56px 16px 24px;
+  border: 0; background: rgba(150, 110, 80, 0.6); display: none; /* muted, see-through orange */
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+}
+.lightbox[open] { display: flex; align-items: center; justify-content: center; }
+.lightbox::backdrop { background: transparent; }
+.lightbox__figure { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 12px; max-height: 100%; }
+.lightbox__img { max-width: 100%; max-height: calc(100vh - 140px); width: auto; height: auto; border-radius: 8px; }
+.lightbox__caption { color: var(--white); font-size: 0.875rem; text-align: center; }
+.lightbox__caption .gallery-item__credit { color: rgba(255, 255, 255, 0.85); }
+.lightbox__close {
+  position: fixed; top: 12px; right: 12px; width: 44px; height: 44px;
+  display: grid; place-items: center; border: 0; border-radius: 50%;
+  background: var(--white); color: var(--navy); font: 400 28px/1 inherit; cursor: pointer;
+}
+.lightbox__close:hover { background: var(--navy); color: var(--white); }
+.lightbox__close:focus-visible { outline: 3px solid var(--white); outline-offset: 2px; }
+
 /* ---------- Header ---------- */
 .site-header { border-bottom: 1px solid var(--line); }
 
@@ -135,9 +186,14 @@ a { color: inherit; }
 
 .site-header__tools { display: flex; align-items: center; gap: 20px; }
 
-.lang { display: flex; gap: 12px; font-size: 0.75rem; letter-spacing: 0.08em; }
-.lang a { text-decoration: none; font-weight: 600; border-bottom: 2px solid var(--navy); }
-.lang__soon { opacity: 0.45; cursor: default; }
+/* Language switch (EN / EL round flags, as in the Astro site) */
+.lang-switch { display: flex; align-items: center; gap: 12px; list-style: none; margin: 0; padding: 0; }
+.lang-switch a { display: inline-flex; border-radius: 50%; text-decoration: none; }
+.icon-round { display: block; width: 36px; height: 36px; border-radius: 50%; transition: transform 0.2s ease, opacity 0.2s ease; }
+.lang-switch a:hover .icon-round { transform: scale(1.08); }
+.lang-switch a[aria-current='true'] .icon-round { box-shadow: 0 0 0 2px var(--cream), 0 0 0 4px var(--navy); }
+.lang-switch a:not([aria-current]) .icon-round { opacity: 0.6; }
+.lang-switch a:not([aria-current]):hover .icon-round { opacity: 1; }
 
 .menu-toggle {
   display: none;

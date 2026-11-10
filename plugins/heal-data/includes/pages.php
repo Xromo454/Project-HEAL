@@ -15,7 +15,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-const HEAL_PAGES_VERSION = 3;
+const HEAL_PAGES_VERSION = 4; // 4: gallery page
 const HEAL_SEED_HASH_META = '_heal_seed_hash';
 
 /** slug => [title, parent slug or null, menu order] */
@@ -29,6 +29,7 @@ function heal_page_list(): array
         'consortium'    => ['Consortium & team', null, 5],
         'results'       => ['Results', null, 6],
         'news'          => ['News & events', null, 7],
+        'gallery'       => ['Gallery', null, 7],
         'participate'   => ['Participate', null, 8],
         'contact'       => ['Contact', null, 9],
         'privacy'       => ['Privacy policy', null, 20],

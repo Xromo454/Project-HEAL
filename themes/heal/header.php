@@ -17,10 +17,17 @@
         </a>
 
         <div class="site-header__tools">
-            <nav class="lang" aria-label="Language">
-                <a href="<?= esc_url(home_url('/')) ?>" lang="en" aria-current="true">EN</a>
-                <span class="lang__soon" lang="el" title="Greek version coming soon">EL</span>
-            </nav>
+            <ul class="lang-switch" aria-label="Language">
+                <?php foreach (heal_languages() as $l) : ?>
+                    <li>
+                        <a href="<?= esc_url($l['url']) ?>" lang="<?= esc_attr($l['code']) ?>" hreflang="<?= esc_attr($l['code']) ?>"
+                           aria-label="<?= esc_attr($l['name']) ?>" title="<?= esc_attr($l['title']) ?>"
+                           <?= $l['current'] ? 'aria-current="true"' : '' ?>>
+                            <img class="icon-round" src="<?= esc_url(get_theme_file_uri('assets/icons/icon-lang-' . $l['code'] . '.svg')) ?>" alt="" width="36" height="36">
+                        </a>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
             <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
         </div>
     </div>
@@ -33,7 +40,7 @@
                         <li><a href="<?= esc_url($url) ?>" <?= heal_is_current($url) ? 'aria-current="page"' : '' ?>><?= esc_html($label) ?></a></li>
                     <?php endforeach; ?>
                 </ul>
-                <a class="btn btn--outline main-nav__cta" href="<?= esc_url(home_url('/participate/')) ?>">Participate <?= heal_arrow() ?></a>
+                <a class="btn btn--solid main-nav__cta" href="<?= esc_url(home_url('/participate/')) ?>">Participate <?= heal_arrow() ?></a>
             </nav>
         </div>
     </div>

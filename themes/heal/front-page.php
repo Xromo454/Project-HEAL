@@ -16,7 +16,7 @@ $partners = heal_has_data() ? heal_partners() : [];
             <p class="eyebrow eyebrow--navy">Limassol · Public-health research</p>
             <h1 class="hero__title">Everyday cycling.<br>Shared possibilities.</h1>
             <p class="hero__lead">HEAL aims to explore how behavioural science and environmental context can support health engagement through everyday cycling in Limassol.</p>
-            <a class="btn btn--outline" href="<?= esc_url(home_url('/project/')) ?>">Explore the project</a>
+            <a class="btn btn--solid" href="<?= esc_url(home_url('/project/')) ?>">Explore the project</a>
             <p><a class="text-link" href="<?= esc_url(home_url('/participate/')) ?>">About participation <?= heal_arrow() ?></a></p>
             <p class="muted">A COM-B and Exposome Partnership for Health Engagement.</p>
         </div>
