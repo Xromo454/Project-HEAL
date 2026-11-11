@@ -83,6 +83,7 @@ The theme still renders if the HEAL Data plugin is off, but without project data
 | `includes/news.php` | News list (`[heal_news]`) |
 | `includes/publications.php` | "Publications" in the admin and the list on the Results page |
 | `includes/seo.php` | Page titles, meta descriptions, Open Graph, structured data (ResearchProject) |
+| `includes/hardening.php` | Hides usernames and the WordPress version, turns off comments and XML-RPC, sends basic security headers |
 
 Shortcodes:
 
@@ -205,6 +206,15 @@ Texts that are still drafts have an orange "Draft" note at the top. Delete the n
 
 The `.gitignore` allows only `themes/heal/`, `plugins/heal-data/`, `scripts/` and `.github/`,
 so other files cannot be committed by mistake.
+
+## For the server administrators (CUT IT)
+
+The plugin cannot do these, they belong to the server:
+
+- HTTPS and the `Strict-Transport-Security` header (HSTS).
+- A `Content-Security-Policy` header.
+- Hiding `readme.html` and `license.txt` in the WordPress folder (they show the WordPress version).
+- Blocking `xmlrpc.php` completely (the plugin already removes its methods).
 
 ## Still open
 
