@@ -7,6 +7,7 @@ get_header();
 $deliverables = heal_has_data() ? heal_public_deliverables() : [];
 $wpCount = heal_has_data() ? count(heal_work_packages()) : 5;
 $partners = heal_has_data() ? heal_partners() : [];
+$currentMonth = heal_has_data() ? heal_project_month(heal_start_date()) : null; // for the deliverable status
 ?>
 
 <!-- Hero -->
@@ -130,11 +131,12 @@ $partners = heal_has_data() ? heal_partners() : [];
         <p>Public outputs will be listed as they are approved for release. These are planned deliverables, not available downloads.</p>
 
         <ul class="cards cards--3">
-            <?php foreach (array_slice($deliverables, 0, 3) as $d) : ?>
+            <?php foreach (array_slice($deliverables, 0, 3) as $d) :
+                $status = heal_deliverable_status($d, $currentMonth); // same status as on the Results page ?>
                 <li class="card">
                     <span class="card__meta"><?= esc_html($d['id']) ?> · Due M<?= (int) $d['dueMonth'] ?></span>
                     <h3><?= esc_html($d['title']) ?></h3>
-                    <span class="badge">Planned</span>
+                    <span class="badge"><?= esc_html(HEAL_STATUS_LABEL[$status]) ?></span>
                 </li>
             <?php endforeach; ?>
         </ul>
