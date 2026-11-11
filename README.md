@@ -187,7 +187,7 @@ Texts that are still drafts have an orange "Draft" note at the top. Delete the n
    tar -a -c -f heal-theme.zip -C themes heal
    tar -a -c -f heal-data-plugin.zip -C plugins heal-data
    ```
-   The plugin zip is large (about 8 MB) because of the starting photos in `data/gallery/images/`.
+   The plugin zip is about 4.5 MB, most of it the starting photos in `data/gallery/images/`.
    If the server's upload limit is lower, compress the photos first.
 2. **Appearance → Themes → Add New → Upload Theme**, then **Plugins → Add New → Upload Plugin**; activate both.
    On a WordPress Multisite only the network administrator can upload; ask CUT IT.
