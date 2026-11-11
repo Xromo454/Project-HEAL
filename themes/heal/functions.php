@@ -108,3 +108,47 @@ function heal_has_data(): bool
 {
     return function_exists('heal_public_deliverables');
 }
+
+/* ---------- HEAL icon instead of the WordPress logo ---------- */
+
+/**
+ * Browser tab / home screen icon (the HEAL bike). A Site Icon set in
+ * Appearance → Customize → Site Identity still wins.
+ */
+function heal_icon_tags(): void
+{
+    if (has_site_icon()) {
+        return;
+    }
+    $icon = fn(string $file): string => esc_url(get_theme_file_uri('assets/icons/' . $file));
+    echo '<link rel="icon" href="' . $icon('favicon.ico') . '" sizes="48x48">' . "\n";
+    echo '<link rel="icon" type="image/png" href="' . $icon('icon-192.png') . '" sizes="192x192">' . "\n";
+    echo '<link rel="apple-touch-icon" href="' . $icon('apple-touch-icon.png') . '">' . "\n";
+}
+add_action('wp_head', 'heal_icon_tags', 2);
+add_action('admin_head', 'heal_icon_tags');
+add_action('login_head', 'heal_icon_tags');
+
+// /favicon.ico would otherwise redirect to the WordPress "W" logo.
+add_action('do_faviconico', function () {
+    if (!has_site_icon()) {
+        wp_redirect(get_theme_file_uri('assets/icons/favicon.ico'), 301);
+        exit;
+    }
+});
+
+// Login page (/wp-login.php): HEAL icon linking to the site instead of the WordPress logo.
+add_action('login_enqueue_scripts', function () {
+    $logo = esc_url(get_theme_file_uri('assets/icons/icon-192.png'));
+    echo '<style>
+        body.login { background: #fff7ed; }
+        #login h1 a {
+            background-image: url("' . $logo . '");
+            background-size: contain;
+            width: 96px;
+            height: 96px;
+        }
+    </style>';
+});
+add_filter('login_headerurl', fn() => home_url('/'));
+add_filter('login_headertext', fn() => get_bloginfo('name'));
