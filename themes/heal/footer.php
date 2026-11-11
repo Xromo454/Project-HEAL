@@ -4,7 +4,7 @@
     <div class="container">
         <div class="site-footer__grid">
             <div>
-                <p class="site-footer__brand">HEAL</p>
+                <a class="site-footer__logo" href="<?= esc_url(home_url('/')) ?>" aria-label="HEAL home"><img src="<?= esc_url(get_theme_file_uri('assets/logo-white.svg')) ?>" alt="HEAL" width="1365" height="649"></a>
                 <p class="site-footer__lead">A COM-B and Exposome Partnership for Health Engagement.</p>
                 <p class="site-footer__small">Health engagement. Everyday cycling. Limassol.</p>
             </div>

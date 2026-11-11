@@ -1,7 +1,7 @@
 /*
 Theme Name: HEAL
 Description: Theme for the HEAL research project (CUT). Layout from the Figma prototype. Data comes from the HEAL Data plugin.
-Version: 0.3.8
+Version: 0.4.0
 Requires PHP: 8.0
 Text Domain: heal
 */
@@ -586,3 +586,16 @@ a.gantt__label:hover strong { text-decoration: underline; text-underline-offset:
   .gantt__row { grid-template-columns: 1fr; }
   .gantt__row--axis > span:first-child { display: none; }
 }
+
+/* ---------- Logo downloads on the Media kit page (HEAL Data plugin) ---------- */
+.logos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin: 0 0 1rem; }
+.logo-card { margin: 0; border: 1px solid var(--line); border-radius: 12px; background: var(--cream); overflow: hidden; }
+.logo-card__img { display: flex; align-items: center; justify-content: center; min-height: 160px; padding: 24px; background: var(--white); }
+.logo-card__img img { display: block; width: auto; max-width: 100%; max-height: 110px; height: auto; }
+.logo-card figcaption { padding: 16px 20px; font-size: 0.9375rem; line-height: 1.5; }
+@media (max-width: 760px) { .logos { grid-template-columns: 1fr; } }
+
+/* Logo in the footer (white SVG) and the dark tile for the white variant on the Media kit page */
+.site-footer__logo { display: inline-block; margin-bottom: 20px; }
+.site-footer__logo img { display: block; width: 150px; height: auto; }
+.logo-card__img--dark { background: var(--navy); }

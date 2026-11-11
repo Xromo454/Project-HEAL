@@ -71,3 +71,48 @@ add_shortcode('heal_contact_email', function () {
     $email = HEAL_SITE['contactEmail'];
     return sprintf('<a href="mailto:%1$s">%1$s</a>', esc_html($email));
 });
+
+/**
+ * [heal_logos]: the HEAL logo variants with download links (Media kit page).
+ * Files: assets/brand/heal-logo-<variant>.png and heal-logo-<variant>.svg.
+ * Add a variant by adding its files and a line below ("dark": show it on a dark tile).
+ */
+add_shortcode('heal_logos', function () {
+    $variants = [
+        'orange'     => ['label' => 'Orange (main logo)', 'dark' => false],
+        'negative'   => ['label' => 'Negative (blue)', 'dark' => false],
+        'monochrome' => ['label' => 'Monochrome (grey)', 'dark' => false],
+        'white'      => ['label' => 'White (for dark backgrounds)', 'dark' => true],
+    ];
+    $dir  = plugin_dir_path(__DIR__) . 'assets/brand/';
+    $base = dirname(__DIR__) . '/heal-data.php';
+
+    ob_start(); ?>
+    <div class="logos">
+    <?php foreach ($variants as $key => $v) :
+        $png = "heal-logo-$key.png";
+        $svg = "heal-logo-$key.svg";
+        if (!is_readable($dir . $png)) {
+            continue;
+        }
+        $url    = plugins_url('assets/brand/' . $png, $base);
+        $size   = getimagesize($dir . $png);
+        $hasSvg = is_readable($dir . $svg); ?>
+        <figure class="logo-card">
+            <div class="logo-card__img<?= $v['dark'] ? ' logo-card__img--dark' : '' ?>">
+                <img src="<?= esc_url($hasSvg ? plugins_url('assets/brand/' . $svg, $base) : $url) ?>"
+                     alt="HEAL logo, <?= esc_attr(strtolower($v['label'])) ?>" width="<?= (int) ($size[0] ?? 0) ?>" height="<?= (int) ($size[1] ?? 0) ?>" loading="lazy">
+            </div>
+            <figcaption>
+                <?= esc_html($v['label']) ?><br>
+                <span class="small">SVG (vector) and PNG, <?= (int) ($size[0] ?? 0) ?> × <?= (int) ($size[1] ?? 0) ?> px, transparent background</span><br>
+                <?php if ($hasSvg) : ?>
+                    <a href="<?= esc_url(plugins_url('assets/brand/' . $svg, $base)) ?>" download>Download SVG</a> ·
+                <?php endif; ?>
+                <a href="<?= esc_url($url) ?>" download>Download PNG</a>
+            </figcaption>
+        </figure>
+    <?php endforeach; ?>
+    </div>
+    <?php return ob_get_clean();
+});

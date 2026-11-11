@@ -97,6 +97,7 @@ Shortcodes:
 | `[heal_consortium]` | Partners |
 | `[heal_news]` | Latest news posts, 6 per page |
 | `[heal_publications]` | Publication list |
+| `[heal_logos]` | HEAL logo variants (orange, negative, monochrome, white) with SVG and PNG downloads (Media kit); files in `assets/brand/` |
 | `[heal_project_number]` | Grant project number |
 | `[heal_contact_email]` | Contact email link |
 
