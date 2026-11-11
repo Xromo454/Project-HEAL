@@ -4,7 +4,7 @@
  *
  *  - Usernames: the public list of users (REST and ?author=1), author pages, the users sitemap,
  *    the author in the RSS feed and in oEmbed previews, and the "unknown username" login
- *    message are closed. Logged-in users still see author pages.
+ *    message are closed. Author pages lead to the home page for everyone, also for logged-in users.
  *  - Version: the WordPress version is removed from the page head and from core file links.
  *  - Comments and pingbacks are off (the site collects no visitor data), and XML-RPC is off.
  *  - Basic security headers.
