@@ -15,13 +15,13 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-const HEAL_PAGES_VERSION = 7; // 4: gallery page, 5: gallery from Media Library blocks, 6: news list on the News page, 7: "Partners" heading on Consortium
+const HEAL_PAGES_VERSION = 8; // 4: gallery page, 5: gallery from Media Library blocks, 6: news list on the News page, 7: "Partners" heading on Consortium, 8: timeline and work package pages
 const HEAL_SEED_HASH_META = '_heal_seed_hash';
 
 /** slug => [title, parent slug or null, menu order] */
 function heal_page_list(): array
 {
-    return [
+    $pages = [
         'project'       => ['Overview & aims', null, 1],
         'how-it-works'  => ['How it works', 'project', 2],
         'living-lab'    => ['Limassol living lab', 'project', 3],
@@ -37,6 +37,12 @@ function heal_page_list(): array
         'legal'         => ['Legal notice', null, 22],
         'media-kit'     => ['Media kit', null, 23],
     ];
+
+    // One page per work package under Work plan: /work-plan/wp1/ ... (title from data/workPackages.json).
+    foreach (heal_work_packages() as $i => $wp) {
+        $pages[strtolower($wp['id'])] = [$wp['id'] . ': ' . $wp['title'], 'work-plan', $i + 1];
+    }
+    return $pages;
 }
 
 function heal_page_content(string $slug): string

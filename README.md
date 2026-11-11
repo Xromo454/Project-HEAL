@@ -77,7 +77,8 @@ The theme still renders if the HEAL Data plugin is off, but without project data
 | `includes/data.php` | Reads the JSON files and gives the shortcodes their lists (public deliverables only) |
 | `includes/status.php` | Deliverable status (Planned / In progress / Published) from the project month |
 | `includes/settings.php` | "HEAL project start date" field in **Settings → General** |
-| `includes/shortcodes.php` | Shortcodes, see below |
+| `includes/shortcodes.php` | Shortcodes for results, consortium, project number, contact email |
+| `includes/workplan.php` | Timeline, work package cards and the five work package pages (`/work-plan/wp1/` ...), built from the data |
 | `includes/pages.php` | Creates the pages and refreshes the ones nobody edited |
 | `includes/gallery.php` | Imports the starting photos and builds the Gallery page from blocks |
 | `includes/news.php` | News list (`[heal_news]`) |
@@ -90,7 +91,9 @@ Shortcodes:
 | Shortcode | Output |
 |---|---|
 | `[heal_results]` | Table of public deliverables with status, then the publications |
-| `[heal_work_plan]` | Work packages and milestones |
+| `[heal_timeline]` | The 24 months as bars, one row per work package, with milestones (and the current month once the start date is set) |
+| `[heal_work_plan]` | The five work packages as cards, each linking to its own page |
+| `[heal_wp id="WP1"]` | One work package: objective, tasks on a timeline, milestones, public deliverables |
 | `[heal_consortium]` | Partners |
 | `[heal_news]` | Latest news posts, 6 per page |
 | `[heal_publications]` | Publication list |

@@ -1,7 +1,7 @@
 /*
 Theme Name: HEAL
 Description: Theme for the HEAL research project (CUT). Layout from the Figma prototype. Data comes from the HEAL Data plugin.
-Version: 0.3.7
+Version: 0.3.8
 Requires PHP: 8.0
 Text Domain: heal
 */
@@ -523,3 +523,66 @@ a { color: inherit; }
 .pub__title { font-weight: 500; }
 .pub-list .badge { margin-left: 8px; }
 .heal-results__heading { margin-top: 3rem; }
+
+/* ---------- Work plan: timeline and work package pages (HEAL Data plugin) ---------- */
+.visually-hidden {
+  position: absolute !important; width: 1px; height: 1px; margin: -1px; padding: 0;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+.gantt { margin: 0 0 3rem; }
+.gantt figcaption { margin-bottom: 1.25rem; font-size: 0.875rem; color: var(--muted); }
+.gantt__rows { margin: 0; padding: 0 !important; list-style: none; }
+.gantt__row {
+  display: grid; grid-template-columns: minmax(0, 300px) 1fr; gap: 8px 16px; align-items: center;
+  margin: 0 !important; padding: 10px 0; border-top: 1px solid var(--line);
+}
+.gantt__row--axis { padding: 0 0 4px; border-top: 0; }
+.gantt__label { display: block; font-size: 0.9375rem; line-height: 1.35; text-decoration: none; }
+a.gantt__label:hover strong { text-decoration: underline; text-underline-offset: 3px; }
+.gantt__months { display: block; font-size: 0.75rem; color: var(--muted); }
+.gantt__axis { position: relative; height: 18px; font-size: 0.6875rem; color: var(--muted); }
+.gantt__axis span { position: absolute; left: calc((var(--m) - 0.5) * 100% / 24); transform: translateX(-50%); }
+.gantt__track {
+  position: relative; height: 28px; border-radius: 6px; background-color: var(--card);
+  background-image: repeating-linear-gradient(to right, transparent 0, transparent calc(100% / 24 - 1px), var(--line) calc(100% / 24 - 1px), var(--line) calc(100% / 24));
+}
+.gantt__bar {
+  position: absolute; top: 5px; bottom: 5px; border-radius: 4px; background: var(--navy);
+  left: calc((var(--s) - 1) * 100% / 24); width: calc((var(--e) - var(--s) + 1) * 100% / 24);
+}
+.gantt__ms {
+  position: absolute; top: 50%; left: calc((var(--m) - 0.5) * 100% / 24); z-index: 1;
+  width: 12px; height: 12px; border: 2px solid var(--white); background: var(--orange);
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+.gantt__now {
+  position: absolute; top: -4px; bottom: -4px; z-index: 2; width: 2px; background: var(--orange-dark);
+  left: calc((var(--m) - 0.5) * 100% / 24);
+}
+
+.wp-cards { display: grid; gap: 24px; margin: 0 0 2rem; }
+.wp-card { padding: 24px; border: 1px solid var(--line); border-radius: 12px; background: var(--cream); }
+.wp-card h3 { margin: 0 0 0.5rem; font-size: 1.375rem; }
+.wp-card h3 a { text-decoration: none; }
+.wp-card h3 a:hover { text-decoration: underline; text-underline-offset: 4px; }
+.wp-card p { font-size: 0.9375rem; }
+.wp-card .eyebrow { margin-bottom: 0.75rem; }
+.wp-card__meta { color: var(--muted); }
+
+.wp-detail__crumb { margin: 0 0 1.5rem; font-size: 0.875rem; }
+.wp-detail__crumb a { text-decoration: none; }
+.wp-detail__meta { margin-bottom: 0.5rem; font-size: 0.875rem; color: var(--orange-dark); }
+.wp-milestones { margin: 0 0 1.5rem; padding-left: 1.25rem; }
+.wp-milestones li { margin-bottom: 1rem; }
+.wp-nav {
+  display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px;
+  margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--line); font-size: 0.9375rem;
+}
+.wp-nav a { text-decoration: none; }
+.wp-nav a:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+@media (max-width: 760px) {
+  .gantt__row { grid-template-columns: 1fr; }
+  .gantt__row--axis > span:first-child { display: none; }
+}

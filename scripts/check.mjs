@@ -121,7 +121,17 @@ const shortcodesDefined = new Set(
 );
 
 // Every page in pages.php has a content file (and the other way round).
-const pageSlugs = [...read(join(plugin, 'includes/pages.php')).matchAll(/^\s+'([a-z0-9-]+)'\s+=>\s+\['/gm)].map((m) => m[1]);
+const pageSlugs = [
+  ...read(join(plugin, 'includes/pages.php')).matchAll(/^\s+'([a-z0-9-]+)'\s+=>\s+\['/gm),
+].map((m) => m[1]);
+// One page per work package (wp1 ... wp5) is added by heal_page_list() from the data.
+for (const wp of wps) pageSlugs.push(wp.id.toLowerCase());
+
+// Each work package page file shows its own work package.
+for (const wp of wps) {
+  const f = join(pagesDir, `${wp.id.toLowerCase()}.html`);
+  if (existsSync(f) && !read(f).includes(`[heal_wp id="${wp.id}"]`)) fail(rel(f), `must contain [heal_wp id="${wp.id}"]`);
+}
 const pageFiles = files(pagesDir, '.html').map((f) => f.replace('.html', ''));
 for (const s of pageSlugs) if (!pageFiles.includes(s)) fail('includes/pages.php', `page "${s}" has no file content/pages/${s}.html`);
 for (const f of pageFiles) if (!pageSlugs.includes(f)) warn(`content/pages/${f}.html`, 'is not listed in heal_page_list() (pages.php), so it is never created');

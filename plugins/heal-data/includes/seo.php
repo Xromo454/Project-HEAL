@@ -75,6 +75,13 @@ function heal_seo_description(): string
     if ($excerpt !== '') {
         return $excerpt;
     }
+    // Work package pages (/work-plan/wp1/ ...): the objective of the work package.
+    if ($post->post_type === 'page' && preg_match('/^wp[1-5]$/', $post->post_name) && function_exists('heal_find_wp')) {
+        $wp = heal_find_wp(strtoupper($post->post_name));
+        if ($wp) {
+            return wp_trim_words($wp['objective'], 28, '…');
+        }
+    }
     if ($post->post_type === 'page' && isset(HEAL_SEO_DESCRIPTIONS[$post->post_name])) {
         return HEAL_SEO_DESCRIPTIONS[$post->post_name];
     }

@@ -2,7 +2,7 @@
 /**
  * Shortcodes. Put them on a page (block editor: "Shortcode" block; Elementor: "Shortcode" widget).
  *   [heal_results]     public deliverables table   (was results.astro)
- *   [heal_work_plan]   work packages, tasks, milestones (was work-plan.astro)
+ *   [heal_work_plan]   see workplan.php
  *   [heal_consortium]  partners                    (was consortium.astro)
  *   [heal_project_number], [heal_contact_email]  small facts for footer / contact page
  * HTML only, no styling: CSS is the theme's job. Classes start with "heal-".
@@ -48,37 +48,7 @@ add_shortcode('heal_results', function () {
     <?php return ob_get_clean();
 });
 
-add_shortcode('heal_work_plan', function () {
-    $partners = heal_partners();
-
-    ob_start();
-    foreach (heal_work_packages() as $wp) :
-        $lead = $partners[$wp['lead']]['shortName'] ?? $wp['lead']; ?>
-        <section class="heal-wp" id="<?= esc_attr(strtolower($wp['id'])) ?>">
-            <h2><?= esc_html($wp['id'] . ': ' . $wp['title']) ?></h2>
-            <p class="heal-wp__meta">M<?= (int) $wp['startMonth'] ?>–M<?= (int) $wp['endMonth'] ?> · Lead: <?= esc_html($lead) ?></p>
-            <p><?= esc_html($wp['objective']) ?></p>
-
-            <h3>Tasks</h3>
-            <ul class="heal-wp__tasks">
-            <?php foreach ($wp['tasks'] as $t) : ?>
-                <li><?= esc_html($t['id'] . ' ' . $t['title']) ?> (M<?= (int) $t['startMonth'] ?>–M<?= (int) $t['endMonth'] ?>)</li>
-            <?php endforeach; ?>
-            </ul>
-
-            <?php $milestones = heal_milestones_for($wp['id']);
-            if ($milestones) : ?>
-                <h3>Milestones</h3>
-                <ul class="heal-wp__milestones">
-                <?php foreach ($milestones as $m) : ?>
-                    <li><?= esc_html($m['id']) ?> (M<?= (int) $m['month'] ?>): <?= esc_html($m['title']) ?></li>
-                <?php endforeach; ?>
-                </ul>
-            <?php endif; ?>
-        </section>
-    <?php endforeach;
-    return ob_get_clean();
-});
+// [heal_work_plan] now lives in workplan.php together with the timeline and the work package pages.
 
 add_shortcode('heal_consortium', function () {
     ob_start(); ?>
