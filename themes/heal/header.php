@@ -11,7 +11,7 @@
 
 <header class="site-header">
     <div class="container site-header__top">
-        <a class="brand" href="<?= esc_url(home_url('/')) ?>" aria-label="HEAL home">
+        <a class="brand" href="<?= esc_url(home_url('/')) ?>">
             <img class="brand__logo" src="<?= esc_url(get_theme_file_uri('assets/logo.svg')) ?>" alt="HEAL" width="1365" height="649">
             <span class="brand__tagline">A COM-B and Exposome Partnership<br>for Health Engagement</span>
         </a>
