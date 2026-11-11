@@ -159,6 +159,21 @@ and link to that folder.
 
 Texts that are still drafts have an orange "Draft" note at the top. Delete the note when the text is approved.
 
+### Blocks that come from data
+
+Some blocks in the editor show only a grey **Shortcode** box (for example `[heal_wp id="WP1"]`). They are filled in
+from the project data when the page is shown, so the text is **not** edited in the editor:
+
+| Shortcode | Where | Changed by |
+|---|---|---|
+| `[heal_timeline]`, `[heal_work_plan]`, `[heal_wp id="WP1"]` … | Work plan and the five work package pages | `data/workPackages.json`, `milestones.json` (developers) |
+| `[heal_results]` | Results table | `data/deliverables.json` (developers); the publications list is edited in **Publications** |
+| `[heal_consortium]` | Consortium partners | `data/partners/*.json` (developers) |
+| `[heal_news]`, `[heal_logos]` | News list, Media kit logos | **Posts**; the logo files in `assets/brand/` |
+
+The pages are not locked: the PI can add normal blocks (paragraphs, images, lists) **above or below** a shortcode block.
+This keeps the timeline, the cards and the work package pages always consistent with each other.
+
 ## Changing content (developers)
 
 - **Project data** (deliverables, work packages, milestones, partners): edit `plugins/heal-data/data/*.json`.
