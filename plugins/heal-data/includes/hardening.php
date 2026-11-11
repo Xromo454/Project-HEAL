@@ -2,8 +2,9 @@
 /**
  * Hardening: stops the site giving away information it does not need to give.
  *
- *  - Usernames: the public list of users (REST and ?author=1), the users sitemap and
- *    the "unknown username" login message are closed. Logged-in users are not affected.
+ *  - Usernames: the public list of users (REST and ?author=1), author pages, the users sitemap,
+ *    the author in the RSS feed and in oEmbed previews, and the "unknown username" login
+ *    message are closed. Logged-in users still see author pages.
  *  - Version: the WordPress version is removed from the page head and from core file links.
  *  - Comments and pingbacks are off (the site collects no visitor data), and XML-RPC is off.
  *  - Basic security headers.
@@ -39,6 +40,15 @@ add_action('template_redirect', function () {
 }, 1);
 
 add_filter('wp_sitemaps_add_provider', fn($provider, $name) => $name === 'users' ? false : $provider, 10, 2);
+
+// RSS feed (<dc:creator>) and oEmbed link previews (author_name, author_url → /author/<username>/)
+// would still show the author. Show the site name instead and drop the author link.
+add_filter('the_author', fn($name) => is_feed() ? get_bloginfo('name') : $name);
+add_filter('oembed_response_data', function (array $data): array {
+    $data['author_name'] = get_bloginfo('name');
+    $data['author_url']  = home_url('/');
+    return $data;
+});
 
 // The same message whether the username or the password is wrong.
 add_filter('login_errors', fn() => 'The username or password is not correct.');
