@@ -14,9 +14,12 @@ get_header(); ?>
                     <?php the_excerpt(); ?>
                 </article>
             <?php endwhile; ?>
-        <?php else : ?>
+        <?php elseif (is_404()) : ?>
             <h1 class="page-title">Page not found</h1>
             <p>This page does not exist yet. <a class="text-link" href="<?= esc_url(home_url('/')) ?>">Back to home</a></p>
+        <?php else : ?>
+            <h1 class="page-title"><?= is_archive() ? wp_kses_post(get_the_archive_title()) : 'Nothing here' ?></h1>
+            <p>There is nothing here yet. <a class="text-link" href="<?= esc_url(home_url('/')) ?>">Back to home</a></p>
         <?php endif; ?>
     </div>
 </section>

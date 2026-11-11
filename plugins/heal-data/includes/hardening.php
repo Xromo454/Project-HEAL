@@ -31,9 +31,10 @@ add_filter('rest_endpoints', function (array $endpoints): array {
     return $endpoints;
 });
 
-// /?author=1 and /author/admin/ would show the username.
+// /?author=1 and /author/admin/ would show the username. There is one team account and no author pages,
+// so they lead to the home page for everyone (also for logged-in users).
 add_action('template_redirect', function () {
-    if (!is_user_logged_in() && (is_author() || isset($_GET['author']))) {
+    if (is_author() || isset($_GET['author'])) {
         wp_safe_redirect(home_url('/'), 301);
         exit;
     }
