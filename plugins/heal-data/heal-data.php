@@ -18,6 +18,7 @@ require_once __DIR__ . '/includes/data.php';
 require_once __DIR__ . '/includes/status.php';
 require_once __DIR__ . '/includes/settings.php';
 require_once __DIR__ . '/includes/shortcodes.php';
+require_once __DIR__ . '/includes/contact.php';
 require_once __DIR__ . '/includes/workplan.php';
 require_once __DIR__ . '/includes/gallery.php';
 require_once __DIR__ . '/includes/news.php';

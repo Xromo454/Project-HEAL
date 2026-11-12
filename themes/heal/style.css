@@ -599,3 +599,52 @@ a.gantt__label:hover strong { text-decoration: underline; text-underline-offset:
 .site-footer__logo { display: inline-block; margin-bottom: 20px; }
 .site-footer__logo img { display: block; width: 150px; height: auto; }
 .logo-card__img--dark { background: var(--navy); }
+
+/* ---------- Contact form ([heal_contact_form], HEAL Data plugin) ---------- */
+.heal-contact { max-width: 640px; margin: 0 0 3rem; }
+.heal-contact__form { display: grid; gap: 20px; }
+.heal-field { display: grid; gap: 6px; margin: 0; }
+.heal-field label { font-weight: 500; }
+.heal-field__hint { margin: 0; font-size: 0.875rem; color: var(--muted); }
+.heal-field input[type="text"],
+.heal-field input[type="email"],
+.heal-field textarea {
+  width: 100%; padding: 12px 14px;
+  font: inherit; color: var(--navy);
+  background: var(--white);
+  border: 1px solid var(--muted); /* 5:1 against the field, enough for a form control (3:1) */
+  border-radius: 6px;
+}
+.heal-field textarea { min-height: 180px; resize: vertical; }
+.heal-field input:focus-visible,
+.heal-field textarea:focus-visible { outline: 3px solid var(--orange); outline-offset: 1px; border-color: var(--navy); }
+
+.heal-field--check { grid-template-columns: auto 1fr; align-items: start; column-gap: 12px; }
+.heal-field--check .heal-field__error { grid-column: 1 / -1; }
+.heal-field--check input { width: 22px; height: 22px; margin: 2px 0 0; accent-color: var(--navy); }
+.heal-field--check label { font-weight: 400; }
+
+/* Errors: text colour 6:1 on cream; the bar on the left also marks the field without relying on colour */
+.heal-field--error { padding-left: 14px; border-left: 3px solid #b3261e; }
+.heal-field--error input, .heal-field--error textarea { border-color: #b3261e; }
+.heal-field__error { margin: 0; font-size: 0.875rem; font-weight: 500; color: #b3261e; }
+.heal-contact__errors {
+  margin: 0 0 24px; padding: 16px 20px;
+  border: 2px solid #b3261e; border-radius: var(--radius); background: var(--white);
+}
+.heal-contact__errors h2 { margin: 0 0 8px; font-size: 1.125rem; }
+.heal-contact__errors ul { margin: 0; padding-left: 1.25rem; }
+.heal-contact__errors a { color: #b3261e; }
+
+.heal-contact__success {
+  padding: 20px 24px; border: 1px solid var(--navy); border-radius: var(--radius); background: var(--white);
+}
+.heal-contact__success h2 { margin: 0 0 8px; font-size: 1.25rem; }
+.heal-contact__success p:last-child { margin-bottom: 0; }
+
+.heal-contact__notice { margin: 0; font-size: 0.875rem; color: var(--muted); }
+
+/* Honeypot: off-screen, not display:none (some bots skip hidden fields) */
+.heal-field--hp { position: absolute !important; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.heal-contact__form .btn { justify-self: start; }
+@media (max-width: 480px) { .heal-contact__form .btn { justify-self: stretch; } }

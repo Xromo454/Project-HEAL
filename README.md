@@ -78,6 +78,7 @@ The theme still renders if the HEAL Data plugin is off, but without project data
 | `includes/status.php` | Deliverable status (Planned / In progress / Published) from the project month |
 | `includes/settings.php` | "HEAL project start date" field in **Settings → General** |
 | `includes/shortcodes.php` | Shortcodes for results, consortium, project number, contact email |
+| `includes/contact.php` | Contact form (`[heal_contact_form]`): emails the message to the project address, stores nothing, spam protection without third parties |
 | `includes/workplan.php` | Timeline, work package cards and the five work package pages (`/work-plan/wp1/` ...), built from the data |
 | `includes/pages.php` | Creates the pages and refreshes the ones nobody edited |
 | `includes/gallery.php` | Imports the starting photos and builds the Gallery page from blocks |
@@ -100,6 +101,7 @@ Shortcodes:
 | `[heal_logos]` | HEAL logo variants (orange, negative, monochrome, white) with SVG and PNG downloads (Media kit); files in `assets/brand/` |
 | `[heal_project_number]` | Grant project number |
 | `[heal_contact_email]` | Contact email link |
+| `[heal_contact_form]` | Contact form (Contact page) |
 
 ## Requirements
 
@@ -185,6 +187,19 @@ This keeps the timeline, the cards and the work package pages always consistent 
   then increase `HEAL_PAGES_VERSION`.
 - In page files, `{home}` is replaced with the site URL (write `href="{home}/contact/"`, never `href="/contact/"`).
 
+## Contact form
+
+`[heal_contact_form]` on the Contact page (US-05).
+
+- The message goes by email to `contactEmail` in `includes/config.php`. While that is still `TODO@…`, messages go to
+  the site admin email (**Settings → General**), so the form can be tested.
+- Nothing is saved in the database. The reply goes straight to the visitor (Reply-To).
+- Spam protection without third-party services: a hidden honeypot field, a signed form token (at least 3 seconds
+  to fill in, valid for 2 days) and at most 5 messages per hour from one connection (a hash of the IP address,
+  deleted after one hour).
+- Mail is sent with `wp_mail()`. Local catches outgoing mail in **Local → Tools → Mailpit**. On a server that
+  cannot send mail, install an SMTP plugin (for example WP Mail SMTP) with the CUT mail server.
+
 ## Checks
 
 `.github/workflows/ci.yml` runs on every push and pull request to this branch:
@@ -235,8 +250,15 @@ The plugin cannot do these, they belong to the server:
 - Hiding `readme.html` and `license.txt` in the WordPress folder (they show the WordPress version).
 - Blocking `xmlrpc.php` completely (the plugin already removes its methods).
 
+## Known accessibility exception
+
+The orange buttons (`.btn--solid`, e.g. "Participate", "Send message") keep the brand orange `#d97a2b` with white
+text. That is a contrast of **3.1:1**, below the WCAG 2.1 AA minimum of 4.5:1 for normal text (NFR-A11Y), so axe
+reports it. The team decided to keep the brand colour (November 2026). Everything else checked passes AA.
+To fix it later, change one line in `themes/heal/style.css`: `--orange-bg: #b35a14;` (4.8:1).
+
 ## Still open
 
 Waiting for the PI or CUT: access to the WordPress server and permission to install the theme and plugin,
-the contact email, the data protection officer's contact, the official funding logos, the project start date,
+the contact email (also where the contact form sends messages), the data protection officer's contact, the official funding logos, the project start date,
 approval of the page texts.
