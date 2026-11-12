@@ -1,7 +1,7 @@
 /*
 Theme Name: HEAL
 Description: Theme for the HEAL research project (CUT). Layout from the Figma prototype. Data comes from the HEAL Data plugin.
-Version: 0.4.0
+Version: 0.5.0
 Requires PHP: 8.0
 Text Domain: heal
 */
@@ -176,6 +176,23 @@ a { color: inherit; }
 
 /* ---------- Header ---------- */
 .site-header { border-bottom: 1px solid var(--line); }
+
+/* Phones only: the header sticks to the top of the screen. nav.js adds .is-hidden while scrolling
+   down (the header slides away) and removes it as soon as you scroll up. On larger screens the
+   header stays at the top of the page and scrolls away with it. */
+@media (max-width: 760px) {
+  .site-header {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--cream);
+    transition: transform 0.25s ease;
+  }
+  .site-header.is-hidden { transform: translateY(-100%); }
+  /* Logged in: stay below the WordPress admin bar (it scrolls away on screens up to 600 px). */
+  .admin-bar .site-header { top: 46px; }
+  /* Links to #sections do not end up under the header (nav.js sets the real height). */
+  html { scroll-padding-top: calc(var(--header-h, 64px) + 16px); }
+}
+@media (max-width: 600px) { .admin-bar .site-header { top: 0; } }
 
 .site-header__top {
   display: flex; align-items: center; justify-content: space-between;
@@ -421,7 +438,7 @@ a { color: inherit; }
 
   .site-header__nav { border-top: 0; }
   .main-nav { display: none; flex-direction: column; align-items: stretch; padding: 8px 0 24px; }
-  .main-nav.is-open { display: flex; }
+  .main-nav.is-open { display: flex; max-height: calc(100vh - 64px); max-height: calc(100dvh - 64px); overflow-y: auto; }
   .main-nav ul { flex-direction: column; gap: 0; }
   .main-nav ul a { display: block; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 1rem; }
 
