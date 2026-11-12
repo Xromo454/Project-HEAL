@@ -68,6 +68,9 @@ add_shortcode('heal_consortium', function () {
 add_shortcode('heal_project_number', fn() => esc_html(HEAL_SITE['projectNumber']));
 
 add_shortcode('heal_contact_email', function () {
+    if (!heal_has_contact_email()) {
+        return 'The project email address will be added soon.'; // until config.php has the real address
+    }
     $email = HEAL_SITE['contactEmail'];
     return sprintf('<a href="mailto:%1$s">%1$s</a>', esc_html($email));
 });

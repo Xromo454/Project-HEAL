@@ -24,14 +24,17 @@ const HEAL_CONTACT_MIN_SECONDS = 3;        // filled in faster than this = proba
 const HEAL_CONTACT_MAX_AGE     = 2 * DAY_IN_SECONDS; // form token validity (pages may be cached)
 const HEAL_CONTACT_MAX_LENGTH  = ['name' => 100, 'email' => 200, 'message' => 5000];
 
+/** True once the real project address is set in config.php (not empty, not the "TODO@" placeholder). */
+function heal_has_contact_email(): bool
+{
+    $email = (string) HEAL_SITE['contactEmail'];
+    return is_email($email) && !str_starts_with(strtolower($email), 'todo@');
+}
+
 /** Where messages go. Until the real address is set in config.php, they go to the site admin. */
 function heal_contact_recipient(): string
 {
-    $to = (string) HEAL_SITE['contactEmail'];
-    if (!is_email($to) || str_starts_with(strtolower($to), 'todo@')) {
-        $to = (string) get_option('admin_email');
-    }
-    return $to;
+    return heal_has_contact_email() ? (string) HEAL_SITE['contactEmail'] : (string) get_option('admin_email');
 }
 
 /** Signed token "time.signature": proves the form came from this site and when it was loaded. */
@@ -136,8 +139,8 @@ function heal_contact_handle(array $post): array
     ];
 
     if (!wp_mail(heal_contact_recipient(), $subject, $body, $headers)) {
-        $result['errors']['form'] = 'Sorry, your message could not be sent. Please email us directly at '
-            . HEAL_SITE['contactEmail'] . '.';
+        $result['errors']['form'] = 'Sorry, your message could not be sent.'
+            . (heal_has_contact_email() ? ' Please email us directly at ' . HEAL_SITE['contactEmail'] . '.' : ' Please try again later.');
         return $result;
     }
 

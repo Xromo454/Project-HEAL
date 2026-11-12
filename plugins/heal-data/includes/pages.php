@@ -15,7 +15,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-const HEAL_PAGES_VERSION = 12; // 4: gallery page, 5: gallery from Media Library blocks, 6: news list, 7: "Partners" heading on Consortium, 8: timeline and work package pages, 9-11: logo downloads on the Media kit, 12: contact form
+const HEAL_PAGES_VERSION = 13; // 4: gallery page, 5: gallery from Media Library blocks, 6: news list, 7: "Partners" heading on Consortium, 8: timeline and work package pages, 9-11: logo downloads on the Media kit, 12: contact form
 const HEAL_SEED_HASH_META = '_heal_seed_hash';
 
 /** slug => [title, parent slug or null, menu order] */
