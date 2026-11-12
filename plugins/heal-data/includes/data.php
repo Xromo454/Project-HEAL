@@ -5,6 +5,18 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+const HEAL_DOI_PATTERN = '/^10\.\d{4,9}\/\S+$/';
+
+/**
+ * A DOI as it is stored: only the DOI. A pasted https://doi.org/... link or a "doi:" prefix is removed.
+ * Returns an empty string if the rest does not look like a DOI.
+ */
+function heal_clean_doi(string $value): string
+{
+    $doi = preg_replace('#^(https?://(dx\.)?doi\.org/|doi:\s*)#i', '', trim($value));
+    return preg_match(HEAL_DOI_PATTERN, $doi) ? $doi : '';
+}
+
 /** Reads data/<name>.json once per request. Returns [] if the file is missing or broken. */
 function heal_load(string $name): array
 {

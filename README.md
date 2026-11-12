@@ -205,6 +205,8 @@ This keeps the timeline, the cards and the work package pages always consistent 
 `.github/workflows/ci.yml` runs on every push and pull request to this branch:
 
 - **PHP syntax** on PHP 8.0 and 8.3.
+- **`scripts/test.php`** (PHP 8.0 and 8.3): tests of the project month, the deliverable status and DOI cleaning.
+  Run it locally with `php scripts/test.php`. It needs no WordPress and no extra tools.
 - **JavaScript syntax** of the theme scripts.
 - **`scripts/check.mjs`**: data and content rules. Run it locally with `node scripts/check.mjs`. It checks that
   - the JSON data is valid and consistent (14 deliverables, 5 work packages, valid months and references),

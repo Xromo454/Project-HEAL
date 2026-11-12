@@ -28,6 +28,8 @@ jobs:
             out=$(php -l "$f" 2>&1) || { echo "$out"; status=1; }
           done < <(find plugins themes -name '*.php' -print0)
           exit $status
+      - name: Tests (project month, deliverable status, DOI)
+        run: php scripts/test.php
 
   project:
     name: Data, content and JS

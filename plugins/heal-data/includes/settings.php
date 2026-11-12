@@ -14,7 +14,7 @@ add_action('admin_init', function () {
         'default'           => '',
         'sanitize_callback' => function ($value) {
             $value = sanitize_text_field((string) $value);
-            return DateTimeImmutable::createFromFormat('!Y-m-d', $value) ? $value : '';
+            return heal_parse_date($value) ? $value : ''; // an impossible date such as 2026-02-31 is dropped
         },
     ]);
 

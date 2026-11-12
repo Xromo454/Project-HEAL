@@ -131,7 +131,7 @@ function heal_seo_jsonld(): array
 
     // Dates only once the PI has set the project start date (Settings → General).
     $start = function_exists('heal_start_date') ? heal_start_date() : null;
-    if ($start && ($d = DateTimeImmutable::createFromFormat('!Y-m-d', $start))) {
+    if ($start && ($d = heal_parse_date($start))) {
         $project['startDate'] = $d->format('Y-m-d');
         $project['endDate']   = $d->modify('+24 months')->modify('-1 day')->format('Y-m-d');
     }

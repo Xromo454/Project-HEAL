@@ -11,13 +11,23 @@ const HEAL_STATUS_LABEL = [
     'published'   => 'Published',
 ];
 
+/**
+ * Strict YYYY-MM-DD. Returns null for anything else, including impossible dates such as 2026-02-31
+ * (PHP would otherwise quietly turn that into 3 March).
+ */
+function heal_parse_date(?string $value): ?DateTimeImmutable
+{
+    if (!$value) {
+        return null;
+    }
+    $date = DateTimeImmutable::createFromFormat('!Y-m-d', $value);
+    return ($date && $date->format('Y-m-d') === $value) ? $date : null;
+}
+
 /** Current project month (M1 = first month). Null if there is no start date or the project has not started. */
 function heal_project_month(?string $startDate, ?DateTimeImmutable $today = null): ?int
 {
-    if (!$startDate) {
-        return null;
-    }
-    $start = DateTimeImmutable::createFromFormat('!Y-m-d', $startDate);
+    $start = heal_parse_date($startDate);
     if (!$start) {
         return null;
     }

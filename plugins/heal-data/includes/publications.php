@@ -12,8 +12,6 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-const HEAL_DOI_PATTERN = '/^10\.\d{4,9}\/\S+$/';
-
 add_action('init', function () {
     register_post_type('heal_publication', [
         'labels' => [
@@ -102,8 +100,7 @@ add_action('save_post_heal_publication', function (int $postId) {
     $year = (int) $text('heal_pub_year');
     update_post_meta($postId, '_heal_pub_year', ($year >= 2025 && $year <= 2100) ? (string) $year : '');
 
-    $doi = preg_replace('#^https?://(dx\.)?doi\.org/#i', '', trim($text('heal_pub_doi')));
-    update_post_meta($postId, '_heal_pub_doi', preg_match(HEAL_DOI_PATTERN, $doi) ? $doi : '');
+    update_post_meta($postId, '_heal_pub_doi', heal_clean_doi($text('heal_pub_doi')));
 
     update_post_meta($postId, '_heal_pub_oa', !empty($_POST['heal_pub_oa']) ? '1' : '');
 
