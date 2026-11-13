@@ -231,6 +231,10 @@ a { color: inherit; }
 
 /* ---------- Hero ---------- */
 .hero { padding-block: clamp(48px, 7vw, 96px); }
+/* Decorative dashed route with a bicycle above the hero. On narrow screens the right part (with the bicycle) is kept. */
+.route { display: flex; justify-content: flex-end; margin-top: 12px; overflow: hidden; line-height: 0; }
+.route img { flex: none; display: block; width: max(100%, 880px); max-width: none; height: auto; }
+.route + .hero, .route + .section { padding-top: clamp(20px, 3vw, 36px); }
 .hero__grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 64px; align-items: start; }
 .hero__title { font-size: clamp(2.75rem, 5.2vw, 4.25rem); margin-bottom: 1.75rem; }
 .hero__lead { color: var(--orange-dark); font-size: 1.0625rem; max-width: 42em; margin-bottom: 1.75rem; }

@@ -47,3 +47,5 @@
 </header>
 
 <main id="main">
+<!-- Decorative route with a bicycle, on every page -->
+<div class="container route"><img src="<?= esc_url(get_theme_file_uri('assets/route.png')) ?>" alt="" width="1388" height="85" decoding="async"></div>
