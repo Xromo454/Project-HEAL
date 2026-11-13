@@ -3,6 +3,7 @@
  * Work plan views, built from data/workPackages.json, milestones.json and deliverables.json:
  *
  *   [heal_timeline]      the 24 months as bars: one row per work package, milestones marked with diamonds,
+ *                        public deliverables as circles that link to the Results page,
  *                        and a line for the current month once the project start date is set
  *   [heal_work_plan]     the five work packages as cards, each linking to its own page
  *   [heal_wp id="WP1"]   the page of one work package: objective, tasks on a timeline, milestones,
@@ -44,17 +45,32 @@ function heal_now_month(): ?int
     return ($m !== null && $m >= 1 && $m <= HEAL_MONTHS) ? $m : null;
 }
 
-/** One bar on the 24-month track, with optional milestone diamonds. */
-function heal_track(int $start, int $end, array $milestones = []): string
+/**
+ * One bar on the 24-month track, with optional milestone diamonds.
+ * Public deliverables are drawn as rings ON the bar, at their due month. Each ring is a link to its row
+ * on the Results page (#d4, #d10, ...). The bar, diamonds and line are decorative (aria-hidden one by one);
+ * the rings are real links with a text name, so the track itself is not aria-hidden.
+ */
+function heal_track(int $start, int $end, array $milestones = [], array $deliverables = []): string
 {
-    $html = '<div class="gantt__track" aria-hidden="true">'
-        . '<span class="gantt__bar" style="--s:' . $start . ';--e:' . $end . '"></span>';
+    $html = '<div class="gantt__track' . ($deliverables ? ' gantt__track--dels' : '') . '">'
+        . '<span class="gantt__bar" aria-hidden="true" style="--s:' . $start . ';--e:' . $end . '"></span>';
     foreach ($milestones as $m) {
-        $html .= '<span class="gantt__ms" style="--m:' . (int) $m['month'] . '" title="'
+        $html .= '<span class="gantt__ms" aria-hidden="true" style="--m:' . (int) $m['month'] . '" title="'
             . esc_attr($m['id'] . ' (M' . (int) $m['month'] . '): ' . $m['title']) . '"></span>';
     }
     if (($now = heal_now_month()) !== null) {
-        $html .= '<span class="gantt__now" style="--m:' . $now . '"></span>';
+        $html .= '<span class="gantt__now" aria-hidden="true" style="--m:' . $now . '"></span>';
+    }
+
+    $currentMonth = $deliverables ? heal_project_month(heal_start_date()) : null;
+    foreach ($deliverables as $d) {
+        $status = heal_deliverable_status($d, $currentMonth);
+        $name   = $d['id'] . ': ' . $d['title'] . ', due month ' . (int) $d['dueMonth'] . ', ' . HEAL_STATUS_LABEL[$status];
+        $html  .= '<a class="gantt__del gantt__del--' . esc_attr($status) . '" style="--m:' . (int) $d['dueMonth'] . '"'
+            . ' href="' . esc_url(home_url('/results/#' . strtolower($d['id']))) . '"'
+            . ' aria-label="' . esc_attr($name) . '" title="' . esc_attr($name) . '">'
+            . '<span class="gantt__del-id" aria-hidden="true">' . esc_html($d['id']) . '</span></a>';
     }
     return $html . '</div>';
 }
@@ -75,18 +91,19 @@ add_shortcode('heal_timeline', function () {
     <figure class="gantt">
         <figcaption>
             The five work packages over the 24 months of the project (M1 is the first month).
-            Diamonds mark milestones<?= $now ? '; the line marks the current month (M' . (int) $now . ')' : '' ?>.
+            Diamonds mark milestones. Circles mark public deliverables: select one to see it on the Results page<?= $now ? '. The line marks the current month (M' . (int) $now . ')' : '' ?>.
         </figcaption>
         <div class="gantt__row gantt__row--axis"><span></span><?= heal_axis() ?></div>
         <ol class="gantt__rows">
         <?php foreach (heal_work_packages() as $wp) :
-            $ms = heal_milestones_for($wp['id']); ?>
+            $ms    = heal_milestones_for($wp['id']);
+            $deliv = array_filter(heal_public_deliverables(), fn($d) => $d['workPackage'] === $wp['id']); ?>
             <li class="gantt__row">
                 <a class="gantt__label" href="<?= esc_url(heal_wp_url($wp['id'])) ?>">
                     <strong><?= esc_html($wp['id']) ?></strong> <?= esc_html($wp['title']) ?>
                     <span class="gantt__months"><?= esc_html(heal_months($wp['startMonth'], $wp['endMonth'])) ?></span>
                 </a>
-                <?= heal_track($wp['startMonth'], $wp['endMonth'], $ms) ?>
+                <?= heal_track($wp['startMonth'], $wp['endMonth'], $ms, $deliv) ?>
                 <?php if ($ms) : ?>
                     <span class="visually-hidden">Milestones: <?= esc_html(implode(', ', array_map(fn($m) => $m['id'] . ' in month ' . $m['month'], $ms))) ?>.</span>
                 <?php endif; ?>

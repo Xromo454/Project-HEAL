@@ -28,7 +28,7 @@ add_shortcode('heal_results', function () {
         <tbody>
         <?php foreach (heal_public_deliverables() as $d) :
             $status = heal_deliverable_status($d, $currentMonth); ?>
-            <tr>
+            <tr id="<?= esc_attr(strtolower($d['id'])) ?>">
                 <td><?= esc_html($d['id']) ?></td>
                 <td><?= esc_html($d['title']) ?></td>
                 <td>M<?= (int) $d['dueMonth'] ?></td>

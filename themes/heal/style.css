@@ -577,6 +577,31 @@ a.gantt__label:hover strong { text-decoration: underline; text-underline-offset:
   position: absolute; top: -4px; bottom: -4px; z-index: 2; width: 2px; background: var(--orange-dark);
   left: calc((var(--m) - 0.5) * 100% / 24);
 }
+/* Public deliverables: rings on the bar at the due month, the id under the bar.
+   White ring = planned, orange ring = in progress, filled white = published.
+   The ring is hollow, so a milestone diamond in the same month stays visible inside it. */
+.gantt__track--dels { margin-bottom: 14px; }
+.gantt__del {
+  position: absolute; top: 50%; left: calc((var(--m) - 0.5) * 100% / 24); z-index: 3;
+  width: 24px; height: 24px; transform: translate(-50%, -50%); text-decoration: none;
+}
+.gantt__del::before {
+  content: ''; position: absolute; inset: 1px; box-sizing: border-box; border-radius: 50%;
+  border: 3px solid var(--white); transition: transform 0.12s;
+}
+.gantt__del--in-progress::before { border-color: var(--orange); }
+.gantt__del--published::before { background: var(--white); }
+.gantt__del-id {
+  position: absolute; top: 100%; left: 50%; transform: translateX(-50%); margin-top: 3px;
+  font-size: 0.6875rem; line-height: 1; color: var(--navy); white-space: nowrap;
+}
+.gantt__del:hover::before, .gantt__del:focus-visible::before { transform: scale(1.15); }
+.gantt__del:hover .gantt__del-id { text-decoration: underline; }
+.gantt__del:focus-visible { outline: 2px solid var(--orange-dark); outline-offset: 2px; border-radius: 50%; }
+
+/* Where a timeline circle lands on the Results page */
+.heal-results tr { scroll-margin-top: 96px; }
+.heal-results tr:target td { background: var(--card); }
 
 .wp-cards { display: grid; gap: 24px; margin: 0 0 2rem; }
 .wp-card { padding: 24px; border: 1px solid var(--line); border-radius: 12px; background: var(--cream); }
